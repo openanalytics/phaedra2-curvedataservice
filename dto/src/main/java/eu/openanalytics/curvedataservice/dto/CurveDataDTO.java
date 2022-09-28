@@ -27,7 +27,6 @@ import lombok.experimental.NonFinal;
 @Builder
 @With
 @AllArgsConstructor
-@NoArgsConstructor(force = true, access = AccessLevel.PRIVATE) // Jackson deserialize compatibility
 @NonFinal
 public class CurveDataDTO {
 }
