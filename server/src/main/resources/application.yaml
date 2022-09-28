@@ -1,0 +1,25 @@
+server:
+  servlet:
+    context-path: /phaedra/curvedata-service
+  port: 6010
+
+spring:
+  cloud:
+    kubernetes:
+      enabled: false
+  application:
+    name: phaedra-curvedata-service
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost
+  jackson:
+    serialization:
+      indent_output: true
+
+eureka:
+  client:
+    enabled: true
+
+

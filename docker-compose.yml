@@ -1,0 +1,23 @@
+version: '3.5'
+
+services:
+  curvedataservice_db:
+    image: postgres:13-alpine
+    restart: on-failure
+    networks:
+      - private
+    command: ["postgres", "-c", "log_statement=all"]
+    environment:
+      - POSTGRES_DB=phaedra2
+      - POSTGRES_USER=phaedra_usr
+      - POSTGRES_PASSWORD=phaedra_usr
+    ports:
+      - "6009:5432"
+
+networks:
+  private:
+    name: private
+    external: false
+  phaedra2:
+    external:
+      name: phaedra2
