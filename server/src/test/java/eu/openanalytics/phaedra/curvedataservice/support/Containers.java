@@ -25,8 +25,8 @@ public class Containers {
         postgreSQLContainer.start();
         try {
             var connection = postgreSQLContainer.createConnection("");
-            connection.createStatement().executeUpdate("create schema protocols");
-            connection.setSchema("protocols");
+            connection.createStatement().executeUpdate("create schema curvedata");
+            connection.setSchema("curvedata");
 
             Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
             Liquibase liquibase = new Liquibase("db/changelog/db.changelog-master.yaml", new ClassLoaderResourceAccessor(), database);

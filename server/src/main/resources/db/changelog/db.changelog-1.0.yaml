@@ -10,61 +10,63 @@ databaseChangeLog:
       author: sberberovic
       preConditions:
         - onFail: MARK_RAN
-        - not:
-            - tableExists:
-                schemaName: curvedata
-                tableName: curve
         - sqlCheck:
             expectedResult: 0
             sql: select count(*) from pg_type as pgt join pg_namespace as pgn on pgt.typnamespace = pgn.oid where pgn.nspname = 'curvedata' and pgt.typname = 'status_code';
       changes:
         - sql:
+            sql: set schema 'curvedata';
+        - sql:
             sql: create type status_code as enum ('WELL','PLATE','EXPERIMENT','FEATURE','PROTOCOL','PROJECT')
         - sql:
             sql: create cast (character varying as status_code) with inout as implicit
+  - changeSet:
+      id: 2
+      author: sberberovic
+      changes:
         - createTable:
             tableName: curve
+            schemaName: curvedata
             columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    nullable: false
-                    primaryKey: true
-              - column:
-                  name: substance_name
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: feature_id
-                  type: bigint
-                  constraints:
-                    nullable: false
-              - column:
-                  name: fit_date
-                  type: timestamp
-                  constraints:
-                    nullable: false
-              - column:
-                  name: version
-                  type: varchar[255]
-                  constraints:
-                    nullable: true
-              - column:
-                  name: x_axis_labels
-                  type: float4[]
-                  constraints:
-                    nullable: true
-              - column:
-                  name: plot_dose_data
-                  type: float4[]
-                  constraints:
-                    nullable: true
-              - column:
-                  name: plot_prediction_data
-                  type: float4[]
-                  constraints:
-                    nullable: true
-
+            - column:
+                name: id
+                type: bigint
+                autoIncrement: true
+                constraints:
+                  nullable: false
+                  primaryKey: true
+            - column:
+                name: substance_name
+                type: varchar(255)
+                constraints:
+                  nullable: false
+            - column:
+                name: feature_id
+                type: bigint
+                constraints:
+                  nullable: false
+            - column:
+                name: fit_date
+                type: timestamp
+                constraints:
+                  nullable: false
+            - column:
+                name: version
+                type: varchar[255]
+                constraints:
+                  nullable: true
+            - column:
+                name: x_axis_labels
+                type: float4[]
+                constraints:
+                  nullable: true
+            - column:
+                name: plot_dose_data
+                type: float4[]
+                constraints:
+                  nullable: true
+            - column:
+                name: plot_prediction_data
+                type: float4[]
+                constraints:
+                  nullable: true
