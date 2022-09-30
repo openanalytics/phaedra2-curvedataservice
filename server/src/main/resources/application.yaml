@@ -9,6 +9,8 @@ spring:
       enabled: false
   application:
     name: phaedra-curvedata-service
+  liquibase:
+    enabled: false
   security:
     oauth2:
       resourceserver:
