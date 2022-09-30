@@ -1,6 +1,17 @@
 databaseChangeLog:
   - changeSet:
-      id: 01_initial_db
+      id: 0
+      author: sberberovic
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - schemaExists:
+                schemaName: curvedata
+      changes:
+        - sql:
+            sql: CREATE SCHEMA IF NOT EXISTS curvedata;
+  - changeSet:
+      id: 1
       author: sberberovic
       preConditions:
         - onFail: MARK_RAN
@@ -8,14 +19,14 @@ databaseChangeLog:
             - tableExists:
                 schemaName: curvedata
                 tableName: curve
+        - sqlCheck:
+            expectedResult: 0
+            sql: select count(*) from pg_type as pgt join pg_namespace as pgn on pgt.typnamespace = pgn.oid where pgn.nspname = 'curvedata' and pgt.typname = 'status_code';
       changes:
         - sql:
-            sql: DO $$ BEGIN
-                  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'status_code') THEN
-                    CREATE TYPE status_code AS ENUM ('SCHEDULED', 'SUCCESS', 'FAILURE');
-                    CREATE CAST (CHARACTER VARYING AS status_code) WITH INOUT AS IMPLICIT;
-                  END IF;
-                END $$;
+            sql: create type status_code as enum ('WELL','PLATE','EXPERIMENT','FEATURE','PROTOCOL','PROJECT')
+        - sql:
+            sql: create cast (character varying as status_code) with inout as implicit
         - createTable:
             tableName: curve
             columns:
@@ -26,4 +37,39 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     primaryKey: true
-#              TODO: add rest of the columns and other tables
+              - column:
+                  name: substance_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: feature_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: fit_date
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: version
+                  type: varchar[255]
+                  constraints:
+                    nullable: true
+              - column:
+                  name: x_axis_labels
+                  type: float4[]
+                  constraints:
+                    nullable: true
+              - column:
+                  name: plot_dose_data
+                  type: float4[]
+                  constraints:
+                    nullable: true
+              - column:
+                  name: plot_prediction_data
+                  type: float4[]
+                  constraints:
+                    nullable: true
+
