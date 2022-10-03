@@ -27,12 +27,15 @@ import eu.openanalytics.phaedra.util.PhaedraRestTemplate;
 import eu.openanalytics.phaedra.util.auth.IAuthorizationService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.RestTemplate;
 
+@Component
 public class HttpCurveDataServiceClient implements CurveDataServiceClient {
 
-    private final PhaedraRestTemplate restTemplate;
+    private final RestTemplate restTemplate;
     private final IAuthorizationService authService;
 
     public HttpCurveDataServiceClient(PhaedraRestTemplate restTemplate, IAuthorizationService authService) {

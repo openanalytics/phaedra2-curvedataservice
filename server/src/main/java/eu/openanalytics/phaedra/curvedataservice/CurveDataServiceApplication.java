@@ -22,6 +22,7 @@ package eu.openanalytics.phaedra.curvedataservice;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import eu.openanalytics.phaedra.util.PhaedraRestTemplate;
 import eu.openanalytics.phaedra.util.auth.AuthenticationConfigHelper;
 import eu.openanalytics.phaedra.util.auth.AuthorizationServiceFactory;
 import eu.openanalytics.phaedra.util.auth.IAuthorizationService;
@@ -64,11 +65,11 @@ public class CurveDataServiceApplication {
         SpringApplication.run(CurveDataServiceApplication.class, args);
     }
 
-    @Bean
-    @LoadBalanced
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
+//    @Bean
+//    @LoadBalanced
+//    public PhaedraRestTemplate restTemplate() {
+//        return new PhaedraRestTemplate();
+//    }
 
     @Bean
     public DataSource dataSource() {
