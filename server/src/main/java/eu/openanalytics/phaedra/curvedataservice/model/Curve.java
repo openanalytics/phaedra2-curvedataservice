@@ -19,6 +19,9 @@ public class Curve {
     @Column("feature_id")
     private Long featureId;
     @NotNull
+    @Column("plate_id")
+    private Long plateId;
+    @NotNull
     @Column("fit_date")
     private Date fitDate;
     private String version;

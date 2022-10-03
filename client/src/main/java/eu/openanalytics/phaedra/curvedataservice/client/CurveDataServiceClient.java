@@ -20,5 +20,10 @@
  */
 package eu.openanalytics.phaedra.curvedataservice.client;
 
+import eu.openanalytics.curvedataservice.dto.CurveDTO;
+import eu.openanalytics.phaedra.curvedataservice.client.exception.CurveUnresolvedException;
+
 public interface CurveDataServiceClient {
+
+    CurveDTO createNewCurve(String substanceName, Long plateId, Long protocolId, Long featureId, Long resultSetId) throws CurveUnresolvedException;
 }

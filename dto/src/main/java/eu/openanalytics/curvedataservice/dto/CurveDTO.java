@@ -25,10 +25,12 @@ import eu.openanalytics.phaedra.util.dto.validation.OnCreate;
 import eu.openanalytics.phaedra.util.dto.validation.OnUpdate;
 import lombok.*;
 import lombok.experimental.NonFinal;
+import org.springframework.data.relational.core.mapping.Column;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Value
 @Builder
@@ -41,31 +43,33 @@ public class CurveDTO {
     @Null(groups = OnUpdate.class, message = "Id must be specified in URL and not repeated in body")
     Long id;
 
+    @NotNull(message = "PlateId is mandatory", groups = {OnCreate.class})
+    @Null(message = "PlateId cannot be changed", groups = {OnUpdate.class})
+    Long plateId;
+
     @NotNull(message = "ProtocolId is mandatory", groups = {OnCreate.class})
     @Null(message = "ProtocolId cannot be changed", groups = {OnUpdate.class})
     Long protocolId;
 
-    @NotNull(message = "PlateId is mandatory", groups = {OnCreate.class})
-    @Null(message = "PlateId cannot be changed", groups = {OnUpdate.class})
-    Long plateId;
+    @NotNull(message = "FeatureId is mandatory", groups = {OnCreate.class})
+    @Null(message = "FeatureId cannot be changed", groups = {OnUpdate.class})
+    Long featureId;
 
     @NotNull(message = "ResultSetId is mandatory", groups = {OnCreate.class})
     @Null(message = "ResultSetId cannot be changed", groups = {OnUpdate.class})
     Long resultSetId;
 
-//    @Null(message = "ExecutionStartTimeStamp must be null when creating a ResultSet", groups = {OnCreate.class})
-//    @Null(message = "ExecutionStartTimeStamp cannot be changed", groups = {OnUpdate.class})
-//    LocalDateTime executionStartTimeStamp;
-//
-//    @Null(message = "ExecutionEndTimeStamp must be null when creating a ResultSet", groups = {OnCreate.class})
-//    @Null(message = "ExecutionEndTimeStamp cannot be changed", groups = {OnUpdate.class})
-//    LocalDateTime executionEndTimeStamp;
+    @NotNull(message = "SubstanceName is mandatory", groups = {OnCreate.class})
+    @Null(message = "SubstanceName cannot be changed", groups = {OnUpdate.class})
+    private String substanceName;
 
-//    @Null(groups = OnCreate.class, message = "Outcome must be null when creating a ResultSet")
-//    @NotNull(groups = OnUpdate.class, message = "Outcome is mandatory when updating a ResultSet")
-//    StatusCode outcome;
-//
-//    @Null(groups = OnCreate.class, message = "ErrorsText must be null when creating a ResultSet")
-//    @NotNull(groups = OnUpdate.class, message = "ErrorsText is mandatory when updating a ResultSet")
-//    String errorsText;
+    private Date fitDate;
+
+    private String version;
+
+    private Double[] xAxisLabels;
+
+    private Double[] plotDoseData;
+
+    private Double[] plotPredictionData;
 }

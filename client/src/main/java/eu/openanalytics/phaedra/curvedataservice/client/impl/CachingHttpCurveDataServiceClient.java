@@ -22,8 +22,10 @@ package eu.openanalytics.phaedra.curvedataservice.client.impl;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import eu.openanalytics.curvedataservice.dto.CurveDTO;
 import eu.openanalytics.curvedataservice.dto.CurveDataDTO;
 import eu.openanalytics.phaedra.curvedataservice.client.CurveDataServiceClient;
+import eu.openanalytics.phaedra.curvedataservice.client.exception.CurveUnresolvedException;
 import eu.openanalytics.phaedra.util.PhaedraRestTemplate;
 import eu.openanalytics.phaedra.util.auth.IAuthorizationService;
 import org.slf4j.Logger;
@@ -52,5 +54,10 @@ public class CachingHttpCurveDataServiceClient implements CurveDataServiceClient
             .maximumSize(1_000)
             .expireAfterAccess(Duration.ofHours(1))
             .build();
+    }
+
+    @Override
+    public CurveDTO createNewCurve(String substanceName, Long plateId, Long protocolId, Long featureId, Long resultSetId) throws CurveUnresolvedException {
+        return httpResultDataServiceClient.createNewCurve(substanceName, plateId, protocolId, featureId, resultSetId);
     }
 }
