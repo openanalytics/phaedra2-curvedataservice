@@ -99,3 +99,9 @@ databaseChangeLog:
                   type: bigint
                   constraints:
                     nullable: false
+  - changeSet:
+      id: 5
+      author: sberberovic
+      changes:
+        - sql:
+            sql: ALTER TABLE curve ALTER COLUMN version TYPE VARCHAR;
