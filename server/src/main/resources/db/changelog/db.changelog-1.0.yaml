@@ -105,3 +105,11 @@ databaseChangeLog:
       changes:
         - sql:
             sql: ALTER TABLE curve ALTER COLUMN version TYPE VARCHAR;
+  - changeSet:
+      id: 6
+      author: sberberovic
+      changes:
+        - sql:
+            sql: GRANT ALL ON ALL TABLES IN SCHEMA "curvedata" TO phaedra2;
+
+
