@@ -32,6 +32,8 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Date;
+
 @Component
 public class HttpCurveDataServiceClient implements CurveDataServiceClient {
 
@@ -51,6 +53,8 @@ public class HttpCurveDataServiceClient implements CurveDataServiceClient {
                 .protocolId(protocolId)
                 .featureId(featureId)
                 .resultSetId(resultSetId)
+                .fitDate(new Date())
+                .version("0.0.1")
                 .build();
 
         HttpEntity<?> httpEntity = new HttpEntity(curveDTO, makeHttpHeaders());
