@@ -26,4 +26,6 @@ import eu.openanalytics.phaedra.curvedataservice.client.exception.CurveUnresolve
 public interface CurveDataServiceClient {
 
     CurveDTO createNewCurve(String substanceName, Long plateId, Long protocolId, Long featureId, Long resultSetId) throws CurveUnresolvedException;
+
+    CurveDTO createNewCurve(String substanceName, Long plateId, Long protocolId, Long featureId, Long resultSetId, double[] dose, double[] prediction) throws CurveUnresolvedException;
 }

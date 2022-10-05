@@ -52,9 +52,9 @@ public class Curve {
     private Date fitDate;
     private String version;
     @Column("x_axis_labels")
-    private Double[] xAxisLabels;
+    private double[] xAxisLabels;
     @Column("plot_dose_data")
-    private Double[] plotDoseData;
+    private double[] plotDoseData;
     @Column("plot_prediction_data")
-    private Double[] plotPredictionData;
+    private double[] plotPredictionData;
 }

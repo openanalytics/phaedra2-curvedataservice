@@ -71,6 +71,34 @@ public class HttpCurveDataServiceClient implements CurveDataServiceClient {
         }
     }
 
+    @Override
+    public CurveDTO createNewCurve(String substanceName, Long plateId, Long protocolId, Long featureId, Long resultSetId, double[] dose, double[] prediction) throws CurveUnresolvedException {
+        var curveDTO = CurveDTO.builder()
+                .substanceName(substanceName)
+                .plateId(plateId)
+                .protocolId(protocolId)
+                .featureId(featureId)
+                .resultSetId(resultSetId)
+                .fitDate(new Date())
+                .version("0.0.1")
+                .plotDoseData(dose)
+                .plotPredictionData(dose)
+                .build();
+
+        HttpEntity<?> httpEntity = new HttpEntity(curveDTO, makeHttpHeaders());
+        try {
+            var response = restTemplate.postForObject(UrlFactory.curve(), httpEntity, CurveDTO.class);
+            if (response == null) {
+                throw new CurveUnresolvedException("Curve could not be converted");
+            }
+            return response;
+        } catch (HttpClientErrorException ex) {
+            throw new CurveUnresolvedException("Error while creating Curve", ex);
+        } catch (HttpServerErrorException ex) {
+            throw new CurveUnresolvedException("Server Error while creating Curve", ex);
+        }
+    }
+
     private HttpHeaders makeHttpHeaders() {
         HttpHeaders httpHeaders = new HttpHeaders();
         String bearerToken = authService.getCurrentBearerToken();
