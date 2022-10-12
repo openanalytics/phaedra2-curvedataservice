@@ -82,7 +82,7 @@ public class HttpCurveDataServiceClient implements CurveDataServiceClient {
                 .fitDate(new Date())
                 .version("0.0.1")
                 .plotDoseData(dose)
-                .plotPredictionData(dose)
+                .plotPredictionData(prediction)
                 .build();
 
         HttpEntity<?> httpEntity = new HttpEntity(curveDTO, makeHttpHeaders());
