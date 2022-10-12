@@ -67,9 +67,9 @@ public class CurveDTO {
 
     private String version;
 
-    private double[] xAxisLabels;
+    private float[] xAxisLabels;
 
-    private double[] plotDoseData;
+    private float[] plotDoseData;
 
-    private double[] plotPredictionData;
+    private float[] plotPredictionData;
 }

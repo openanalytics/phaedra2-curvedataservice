@@ -27,5 +27,5 @@ public interface CurveDataServiceClient {
 
     CurveDTO createNewCurve(String substanceName, Long plateId, Long protocolId, Long featureId, Long resultSetId) throws CurveUnresolvedException;
 
-    CurveDTO createNewCurve(String substanceName, Long plateId, Long protocolId, Long featureId, Long resultSetId, double[] dose, double[] prediction) throws CurveUnresolvedException;
+    CurveDTO createNewCurve(String substanceName, Long plateId, Long protocolId, Long featureId, Long resultSetId, float[] dose, float[] prediction) throws CurveUnresolvedException;
 }

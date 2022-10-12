@@ -62,7 +62,7 @@ public class CachingHttpCurveDataServiceClient implements CurveDataServiceClient
     }
 
     @Override
-    public CurveDTO createNewCurve(String substanceName, Long plateId, Long protocolId, Long featureId, Long resultSetId, double[] dose, double[] prediction) throws CurveUnresolvedException {
+    public CurveDTO createNewCurve(String substanceName, Long plateId, Long protocolId, Long featureId, Long resultSetId, float[] dose, float[] prediction) throws CurveUnresolvedException {
         return httpResultDataServiceClient.createNewCurve(substanceName, plateId, protocolId, featureId, resultSetId, dose, prediction);
     }
 }
