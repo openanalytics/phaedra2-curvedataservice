@@ -23,11 +23,16 @@ package eu.openanalytics.phaedra.curvedataservice.service;
 import eu.openanalytics.curvedataservice.dto.CurveDTO;
 import eu.openanalytics.phaedra.curvedataservice.model.Curve;
 import eu.openanalytics.phaedra.curvedataservice.repository.CurveRepository;
+import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CurveService {
@@ -59,5 +64,20 @@ public class CurveService {
         }});
 
         return modelMapper.map(curveRepository.findById(id.longValue()).get());
+    }
+
+    public List<CurveDTO> getCurveByPlateId(Long plateId) {
+        List<Curve> curves = curveRepository.findCurveByPlateId(plateId);
+        if (CollectionUtils.isNotEmpty(curves))
+            return curves.stream().map(c -> modelMapper.map(c)).collect(Collectors.toList());
+
+        return Collections.emptyList();
+    }
+
+    public List<CurveDTO> getAllCurves() {
+        List<Curve> curves = (List<Curve>) curveRepository.findAll();
+        if (CollectionUtils.isNotEmpty(curves))
+            return curves.stream().map(c -> modelMapper.map(c)).collect(Collectors.toList());
+        return Collections.emptyList();
     }
 }

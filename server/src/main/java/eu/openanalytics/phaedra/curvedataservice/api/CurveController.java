@@ -24,9 +24,10 @@ import eu.openanalytics.curvedataservice.dto.CurveDTO;
 import eu.openanalytics.phaedra.curvedataservice.service.CurveService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class CurveController {
@@ -41,5 +42,13 @@ public class CurveController {
     public ResponseEntity<CurveDTO> createCurve(@RequestBody CurveDTO curveDTO) {
         CurveDTO result = curveService.createCurve(curveDTO);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/curve")
+    public ResponseEntity<List<CurveDTO>> getCurve(@RequestParam Optional<Long> plateId) {
+        if (plateId.isPresent())
+            return new ResponseEntity<>(curveService.getCurveByPlateId(plateId.get()), HttpStatus.OK);
+
+        return new ResponseEntity<>(curveService.getAllCurves(), HttpStatus.OK);
     }
 }
