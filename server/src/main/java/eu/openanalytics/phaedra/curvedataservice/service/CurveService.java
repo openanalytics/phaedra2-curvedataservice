@@ -23,9 +23,11 @@ package eu.openanalytics.phaedra.curvedataservice.service;
 import eu.openanalytics.curvedataservice.dto.CurveDTO;
 import eu.openanalytics.phaedra.curvedataservice.model.Curve;
 import eu.openanalytics.phaedra.curvedataservice.repository.CurveRepository;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
@@ -35,17 +37,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CurveService {
     private final ModelMapper modelMapper;
     private final CurveRepository curveRepository;
 
     private final DataSource dataSource;
 
-    public CurveService(ModelMapper modelMapper, CurveRepository curveRepository, DataSource dataSource) {
-        this.modelMapper = modelMapper;
-        this.curveRepository = curveRepository;
-        this.dataSource = dataSource;
-    }
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     public CurveDTO createCurve(CurveDTO curveDTO) {
         // workaround for https://github.com/spring-projects/spring-data-jdbc/issues/1033
@@ -63,6 +62,8 @@ public class CurveService {
             put("plot_prediction_data", curveDTO.getPlotPredictionData());
         }});
 
+        String message = "Dose-Response Curve created for " + curveDTO.getSubstanceName() + " and featureId " + curveDTO.getFeatureId() + " with curveId " + String.valueOf(id.longValue());
+        kafkaTemplate.send("curvedata-topic", message);
         return modelMapper.map(curveRepository.findById(id.longValue()).get());
     }
 
