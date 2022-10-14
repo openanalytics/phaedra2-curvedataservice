@@ -44,7 +44,7 @@ public class CurveService {
 
     private final DataSource dataSource;
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public CurveDTO createCurve(CurveDTO curveDTO) {
         // workaround for https://github.com/spring-projects/spring-data-jdbc/issues/1033

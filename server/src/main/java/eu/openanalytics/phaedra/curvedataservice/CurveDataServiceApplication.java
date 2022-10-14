@@ -67,12 +67,6 @@ public class CurveDataServiceApplication {
         SpringApplication.run(CurveDataServiceApplication.class, args);
     }
 
-//    @Bean
-//    @LoadBalanced
-//    public PhaedraRestTemplate restTemplate() {
-//        return new PhaedraRestTemplate();
-//    }
-
     @Bean
     public DataSource dataSource() {
         String url = environment.getProperty("DB_URL");
