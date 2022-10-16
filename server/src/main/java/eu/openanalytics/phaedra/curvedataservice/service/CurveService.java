@@ -62,9 +62,9 @@ public class CurveService {
             put("plot_prediction_data", curveDTO.getPlotPredictionData());
         }});
 
-        String message = "Dose-Response Curve created for " + curveDTO.getSubstanceName() + " and featureId " + curveDTO.getFeatureId() + " with curveId " + String.valueOf(id.longValue());
-        kafkaTemplate.send("curvedata-topic", message);
-        return modelMapper.map(curveRepository.findById(id.longValue()).get());
+        CurveDTO created = modelMapper.map(curveRepository.findById(id.longValue()).get());
+        kafkaTemplate.send("curvedata-topic", "createCurve", created);
+        return created;
     }
 
     public List<CurveDTO> getCurveByPlateId(Long plateId) {
