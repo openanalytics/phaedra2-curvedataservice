@@ -27,10 +27,12 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
@@ -69,14 +71,15 @@ public class CurveService {
 
         CurveDTO created = modelMapper.map(curveRepository.findById(id.longValue()).get());
         logger.info("A new curve for " + created.getSubstanceName() + " and featureId " + created.getFeatureId() + " has been created!");
-//        kafkaTemplate.send("curvedata-topic", "createCurve", created);
         return created;
     }
 
     @KafkaListener(topics = "curvedata-topic", groupId = "curvedata-service")
-    public void onCreateCurveMessage(CurveDTO curveDTO) {
-        logger.info("Create new curve for " + curveDTO.getSubstanceName() + " and featureId " + curveDTO.getFeatureId());
-        createCurve(curveDTO);
+    public void onCreateCurveMessage(CurveDTO curveDTO, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String msgKey) {
+        if (msgKey.equals("createCurve")) {
+            logger.info("Create new curve for " + curveDTO.getSubstanceName() + " and featureId " + curveDTO.getFeatureId());
+            createCurve(curveDTO);
+        }
     }
 
     public List<CurveDTO> getCurveByPlateId(Long plateId) {

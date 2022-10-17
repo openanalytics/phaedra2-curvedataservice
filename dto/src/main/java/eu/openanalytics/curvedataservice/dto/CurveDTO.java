@@ -20,16 +20,13 @@
  */
 package eu.openanalytics.curvedataservice.dto;
 
-import eu.openanalytics.curvedataservice.enumeration.StatusCode;
 import eu.openanalytics.phaedra.util.dto.validation.OnCreate;
 import eu.openanalytics.phaedra.util.dto.validation.OnUpdate;
 import lombok.*;
 import lombok.experimental.NonFinal;
-import org.springframework.data.relational.core.mapping.Column;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Value
