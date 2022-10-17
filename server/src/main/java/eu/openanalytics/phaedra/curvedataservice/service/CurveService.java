@@ -25,8 +25,11 @@ import eu.openanalytics.phaedra.curvedataservice.model.Curve;
 import eu.openanalytics.phaedra.curvedataservice.repository.CurveRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +49,8 @@ public class CurveService {
 
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     public CurveDTO createCurve(CurveDTO curveDTO) {
         // workaround for https://github.com/spring-projects/spring-data-jdbc/issues/1033
         var simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("curve").usingGeneratedKeyColumns("id");
@@ -63,8 +68,15 @@ public class CurveService {
         }});
 
         CurveDTO created = modelMapper.map(curveRepository.findById(id.longValue()).get());
-        kafkaTemplate.send("curvedata-topic", "createCurve", created);
+        logger.info("A new curve for " + created.getSubstanceName() + " and featureId " + created.getFeatureId() + " has been created!");
+//        kafkaTemplate.send("curvedata-topic", "createCurve", created);
         return created;
+    }
+
+    @KafkaListener(topics = "curvedata-topic")
+    public void onCreateCurveMessage(CurveDTO curveDTO) {
+        logger.info("Create new curve for " + curveDTO.getSubstanceName() + " and featureId " + curveDTO.getFeatureId());
+        createCurve(curveDTO);
     }
 
     public List<CurveDTO> getCurveByPlateId(Long plateId) {
