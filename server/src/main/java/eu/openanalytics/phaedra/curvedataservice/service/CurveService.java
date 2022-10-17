@@ -73,7 +73,7 @@ public class CurveService {
         return created;
     }
 
-    @KafkaListener(topics = "curvedata-topic")
+    @KafkaListener(topics = "curvedata-topic", groupId = "curvedata-service")
     public void onCreateCurveMessage(CurveDTO curveDTO) {
         logger.info("Create new curve for " + curveDTO.getSubstanceName() + " and featureId " + curveDTO.getFeatureId());
         createCurve(curveDTO);
