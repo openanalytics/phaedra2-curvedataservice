@@ -65,7 +65,7 @@ public class CurveService {
             put("fit_date", curveDTO.getFitDate());
             put("version", curveDTO.getVersion());
             put("wells", curveDTO.getWells());
-            put("well_concentrations", curveDTO.getWells());
+            put("well_concentrations", curveDTO.getWellConcentrations());
             put("feature_values", curveDTO.getFeatureValues());
             put("x_axis_labels", curveDTO.getXAxisLabels());
             put("plot_dose_data", curveDTO.getPlotDoseData());
