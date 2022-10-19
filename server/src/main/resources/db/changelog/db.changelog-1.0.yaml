@@ -111,5 +111,22 @@ databaseChangeLog:
       changes:
         - sql:
             sql: GRANT ALL ON ALL TABLES IN SCHEMA "curvedata" TO phaedra2;
+  - changeSet:
+      id: 7
+      author: sberberovic
+      changes:
+        - addColumn:
+            tableName: curve
+            columns:
+              - column:
+                  name: wells
+                  type: bigint[]
+                  constraints:
+                    nullable: true
+              - column:
+                  name: feature_values
+                  type: float4[]
+                  constraints:
+                    nullable: true
 
 

@@ -64,6 +64,8 @@ public class CurveService {
             put("result_set_id", curveDTO.getResultSetId());
             put("fit_date", curveDTO.getFitDate());
             put("version", curveDTO.getVersion());
+            put("wells", curveDTO.getWells());
+            put("feature_values", curveDTO.getFeatureValues());
             put("x_axis_labels", curveDTO.getXAxisLabels());
             put("plot_dose_data", curveDTO.getPlotDoseData());
             put("plot_prediction_data", curveDTO.getPlotPredictionData());

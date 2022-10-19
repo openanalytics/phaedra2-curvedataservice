@@ -64,6 +64,10 @@ public class CurveDTO {
 
     private String version;
 
+    private long[] wells;
+
+    private float[] featureValues;
+
     private float[] xAxisLabels;
 
     private float[] plotDoseData;

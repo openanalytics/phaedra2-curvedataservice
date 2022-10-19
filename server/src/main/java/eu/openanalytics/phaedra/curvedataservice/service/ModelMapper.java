@@ -54,6 +54,8 @@ public class ModelMapper {
         curve.setXAxisLabels(curveDTO.getXAxisLabels());
         curve.setPlotDoseData(curveDTO.getPlotDoseData());
         curve.setPlotPredictionData(curveDTO.getPlotPredictionData());
+        curve.setWells(curveDTO.getWells());
+        curve.setFeatureValues(curveDTO.getFeatureValues());
         return curve;
     }
 
@@ -73,6 +75,8 @@ public class ModelMapper {
                 .xAxisLabels(curve.getXAxisLabels())
                 .plotDoseData(curve.getPlotDoseData())
                 .plotPredictionData(curve.getPlotPredictionData())
+                .wells(curve.getWells())
+                .featureValues(curve.getFeatureValues())
                 .build();
     }
 }
