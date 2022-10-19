@@ -128,5 +128,17 @@ databaseChangeLog:
                   type: float4[]
                   constraints:
                     nullable: true
+  - changeSet:
+      id: 8
+      author: sberberovic
+      changes:
+        - addColumn:
+            tableName: curve
+            columns:
+              - column:
+                  name: well_concentrations
+                  type: float4[]
+                  constraints:
+                    nullable: true
 
 

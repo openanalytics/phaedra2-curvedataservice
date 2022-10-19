@@ -66,6 +66,8 @@ public class CurveDTO {
 
     private long[] wells;
 
+    private float[] wellConcentrations;
+
     private float[] featureValues;
 
     private float[] xAxisLabels;

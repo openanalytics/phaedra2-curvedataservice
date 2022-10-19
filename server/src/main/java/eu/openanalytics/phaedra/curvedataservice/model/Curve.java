@@ -61,6 +61,9 @@ public class Curve {
 
     private long[] wells;
 
+    @Column("well_concentrations")
+    private float[] wellConcentrations;
+
     @Column("feature_values")
     private float[] featureValues;
 

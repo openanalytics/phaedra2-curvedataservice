@@ -56,6 +56,7 @@ public class ModelMapper {
         curve.setPlotPredictionData(curveDTO.getPlotPredictionData());
         curve.setWells(curveDTO.getWells());
         curve.setFeatureValues(curveDTO.getFeatureValues());
+        curve.setWellConcentrations(curveDTO.getWellConcentrations());
         return curve;
     }
 
@@ -77,6 +78,7 @@ public class ModelMapper {
                 .plotPredictionData(curve.getPlotPredictionData())
                 .wells(curve.getWells())
                 .featureValues(curve.getFeatureValues())
+                .wellConcentrations(curve.getWellConcentrations())
                 .build();
     }
 }
