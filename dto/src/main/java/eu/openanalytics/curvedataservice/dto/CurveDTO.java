@@ -39,40 +39,44 @@ public class CurveDTO {
     @Null(groups = OnCreate.class, message = "Id must be null when creating a Curve")
     @Null(groups = OnUpdate.class, message = "Id must be specified in URL and not repeated in body")
     Long id;
-
     @NotNull(message = "PlateId is mandatory", groups = {OnCreate.class})
     @Null(message = "PlateId cannot be changed", groups = {OnUpdate.class})
     Long plateId;
-
     @NotNull(message = "ProtocolId is mandatory", groups = {OnCreate.class})
     @Null(message = "ProtocolId cannot be changed", groups = {OnUpdate.class})
     Long protocolId;
-
     @NotNull(message = "FeatureId is mandatory", groups = {OnCreate.class})
     @Null(message = "FeatureId cannot be changed", groups = {OnUpdate.class})
     Long featureId;
-
     @NotNull(message = "ResultSetId is mandatory", groups = {OnCreate.class})
     @Null(message = "ResultSetId cannot be changed", groups = {OnUpdate.class})
     Long resultSetId;
-
     @NotNull(message = "SubstanceName is mandatory", groups = {OnCreate.class})
     @Null(message = "SubstanceName cannot be changed", groups = {OnUpdate.class})
     private String substanceName;
-
     private Date fitDate;
-
     private String version;
-
     private long[] wells;
-
     private float[] wellConcentrations;
-
     private float[] featureValues;
-
     private float[] xAxisLabels;
-
     private float[] plotDoseData;
-
     private float[] plotPredictionData;
+    private float[] weights;
+    private String pIC50;
+    private String pIC50Censor;
+    private String pIC50StdErr;
+    private float[] eMax;
+    private float[] eMin;
+    private float[] eMaxConc;
+    private float[] eMinConc;
+    private float[] pIC20;
+    private float[] pIC80;
+    private float[] slope;
+    private float[] bottom;
+    private float[] top;
+    private float[] slopeLowerCI;
+    private float[] slopeUpperCI;
+    private float[] residualVariance;
+    private String warning;
 }

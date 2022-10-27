@@ -140,5 +140,95 @@ databaseChangeLog:
                   type: float4[]
                   constraints:
                     nullable: true
-
-
+  - changeSet:
+      id: 9
+      author: sberberovic
+      changes:
+        - addColumn:
+            tableName: curve
+            columns:
+              - column:
+                  name: weights
+                  type: float4[]
+                  constraints:
+                    nullable: true
+              - column:
+                  name: p_ic50
+                  type: float4[]
+                  constraints:
+                    nullable: true
+              - column:
+                  name: p_ic50_censor
+                  type: varchar[255]
+                  constraints:
+                    nullable: true
+              - column:
+                  name: p_ic50_error
+                  type: varchar[255]
+                  constraints:
+                    nullable: true
+              - column:
+                  name: e_max
+                  type: float4[]
+                  constraints:
+                    nullable: true
+              - column:
+                  name: e_min
+                  type: float4[]
+                  constraints:
+                    nullable: true
+              - column:
+                  name: e_max_conc
+                  type: float4[]
+                  constraints:
+                    nullable: true
+              - column:
+                  name: e_min_conc
+                  type: float4[]
+                  constraints:
+                    nullable: true
+              - column:
+                  name: p_ic20
+                  type: float4[]
+                  constraints:
+                    nullable: true
+              - column:
+                  name: p_ic80
+                  type: float4[]
+                  constraints:
+                    nullable: true
+              - column:
+                  name: slope
+                  type: float4[]
+                  constraints:
+                    nullable: true
+              - column:
+                  name: bottom
+                  type: float4[]
+                  constraints:
+                    nullable: true
+              - column:
+                  name: top
+                  type: float4[]
+                  constraints:
+                    nullable: true
+              - column:
+                  name: slope_lower_ci
+                  type: float4[]
+                  constraints:
+                    nullable: true
+              - column:
+                  name: slope_upper_ci
+                  type: float4[]
+                  constraints:
+                    nullable: true
+              - column:
+                  name: residual_variance
+                  type: float4[]
+                  constraints:
+                    nullable: true
+              - column:
+                  name: warning
+                  type: varchar[255]
+                  constraints:
+                    nullable: true

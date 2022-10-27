@@ -33,46 +33,62 @@ import java.util.Date;
 public class Curve {
     @Id
     private Long id;
-
     @Column("substance_name")
     private String substanceName;
-
     @NotNull
     @Column("plate_id")
     private Long plateId;
-
     @NotNull
     @Column("feature_id")
     private Long featureId;
-
     @NotNull
     @Column("protocol_id")
     private Long protocolId;
-
     @NotNull
     @Column("result_set_id")
     private Long resultSetId;
-
     @NotNull
     @Column("fit_date")
     private Date fitDate;
-
     private String version;
-
     private long[] wells;
-
     @Column("well_concentrations")
     private float[] wellConcentrations;
-
     @Column("feature_values")
     private float[] featureValues;
-
     @Column("x_axis_labels")
     private float[] xAxisLabels;
-
     @Column("plot_dose_data")
     private float[] plotDoseData;
-
     @Column("plot_prediction_data")
     private float[] plotPredictionData;
+    private float[] weights;
+    @Column("p_ic50")
+    private float pIC50;
+    @Column("p_ic50_censor")
+    private String pIC50Censor;
+    @Column("p_ic50_error")
+    private String pIC50StdErr;
+    @Column("e_max")
+    private float eMax;
+    @Column("e_min")
+    private float eMin;
+    @Column("e_max_conc")
+    private float eMaxConc;
+    @Column("e_min_conc")
+    private float eMinConc;
+    @Column("p_ic20")
+    private float pIC20;
+    @Column("p_ic80")
+    private float pIC80;
+    private float slope;
+    private float bottom;
+    private float top;
+    @Column("slope_lower_ci")
+    private float slopeLowerCI;
+    @Column("slope_upper_ci")
+    private float slopeUpperCI;
+    @Column("residual_variance")
+    private float residualVariance;
+    private String warning;
 }
