@@ -232,3 +232,81 @@ databaseChangeLog:
                   type: varchar[255]
                   constraints:
                     nullable: true
+  - changeSet:
+      id: 10
+      author: sberberovic
+      changes:
+        - sql:
+            sql: alter table curve drop column p_ic50, drop column e_max, drop column e_min, drop column e_max_conc, drop column e_min_conc, drop column p_ic20, drop column p_ic80, drop column slope, drop column bottom, drop column top, drop column slope_lower_ci, drop column slope_upper_ci, drop column residual_variance;
+  - changeSet:
+      id: 11
+      author: sberberovic
+      changes:
+        - addColumn:
+            tableName: curve
+            columns:
+              - column:
+                  name: p_ic50
+                  type: float4
+                  constraints:
+                    nullable: true
+              - column:
+                  name: e_max
+                  type: float4
+                  constraints:
+                    nullable: true
+              - column:
+                  name: e_min
+                  type: float4
+                  constraints:
+                    nullable: true
+              - column:
+                  name: e_max_conc
+                  type: float4
+                  constraints:
+                    nullable: true
+              - column:
+                  name: e_min_conc
+                  type: float4
+                  constraints:
+                    nullable: true
+              - column:
+                  name: p_ic20
+                  type: float4
+                  constraints:
+                    nullable: true
+              - column:
+                  name: p_ic80
+                  type: float4
+                  constraints:
+                    nullable: true
+              - column:
+                  name: slope
+                  type: float4
+                  constraints:
+                    nullable: true
+              - column:
+                  name: bottom
+                  type: float4
+                  constraints:
+                    nullable: true
+              - column:
+                  name: top
+                  type: float4
+                  constraints:
+                    nullable: true
+              - column:
+                  name: slope_lower_ci
+                  type: float4
+                  constraints:
+                    nullable: true
+              - column:
+                  name: slope_upper_ci
+                  type: float4
+                  constraints:
+                    nullable: true
+              - column:
+                  name: residual_variance
+                  type: float4
+                  constraints:
+                    nullable: true
