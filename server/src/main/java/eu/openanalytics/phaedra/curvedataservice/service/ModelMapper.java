@@ -22,6 +22,7 @@ package eu.openanalytics.phaedra.curvedataservice.service;
 
 import eu.openanalytics.curvedataservice.dto.CurveDTO;
 import eu.openanalytics.phaedra.curvedataservice.model.Curve;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.modelmapper.config.Configuration;
 import org.modelmapper.convention.NameTransformers;
@@ -63,7 +64,7 @@ public class ModelMapper {
         curve.setFeatureValues(curveDTO.getFeatureValues());
         curve.setWellConcentrations(curveDTO.getWellConcentrations());
         curve.setWeights(curveDTO.getWeights());
-        curve.setPIC50(NumberUtils.isCreatable(curveDTO.getPIC50()) ? Float.parseFloat(curveDTO.getPIC50()) : Float.NaN);
+        curve.setPIC50(curveDTO.getPIC50());
         curve.setPIC50Censor(curveDTO.getPIC50Censor());
         curve.setPIC50StdErr(curveDTO.getPIC50StdErr());
         curve.setEMax(curveDTO.getEMax());
@@ -103,7 +104,7 @@ public class ModelMapper {
                 .featureValues(curve.getFeatureValues())
                 .wellConcentrations(curve.getWellConcentrations())
                 .weights(curve.getWeights())
-                .pIC50(String.valueOf(curve.getPIC50()))
+                .pIC50(curve.getPIC50())
                 .pIC50StdErr(curve.getPIC50StdErr())
                 .eMax(curve.getEMax())
                 .eMin(curve.getEMin())

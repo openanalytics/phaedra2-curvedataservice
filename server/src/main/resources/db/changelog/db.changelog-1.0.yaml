@@ -320,3 +320,9 @@ databaseChangeLog:
             sql: ALTER TABLE curve ALTER COLUMN p_ic50_censor TYPE VARCHAR;
         - sql:
             sql: ALTER TABLE curve ALTER COLUMN p_ic50_error TYPE VARCHAR;
+  - changeSet:
+      id: 13
+      author: sberberovic
+      changes:
+        - sql:
+            sql: ALTER TABLE curve ALTER COLUMN p_ic50 TYPE VARCHAR;

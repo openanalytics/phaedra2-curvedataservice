@@ -64,7 +64,7 @@ public class Curve {
     private float[] plotPredictionData;
     private float[] weights;
     @Column("p_ic50")
-    private float pIC50;
+    private String pIC50;
     @Column("p_ic50_censor")
     private String pIC50Censor;
     @Column("p_ic50_error")
