@@ -70,6 +70,23 @@ public class CurveService {
             put("x_axis_labels", curveDTO.getXAxisLabels());
             put("plot_dose_data", curveDTO.getPlotDoseData());
             put("plot_prediction_data", curveDTO.getPlotPredictionData());
+            put("weights", curveDTO.getWeights());
+            put("p_ic50", curveDTO.getPIC50());
+            put("p_ic50_censor", curveDTO.getPIC50Censor());
+            put("p_ic50_error", curveDTO.getPIC50StdErr());
+            put("e_max", curveDTO.getEMax());
+            put("e_min", curveDTO.getEMin());
+            put("e_max_conc", curveDTO.getEMaxConc());
+            put("e_min_conc", curveDTO.getEMinConc());
+            put("p_ic20", curveDTO.getPIC20());
+            put("p_ic80", curveDTO.getPIC80());
+            put("slope", curveDTO.getSlope());
+            put("bottom", curveDTO.getBottom());
+            put("top", curveDTO.getTop());
+            put("slope_lower_ci", curveDTO.getSlopeLowerCI());
+            put("slope_upper_ci", curveDTO.getSlopeUpperCI());
+            put("residual_variance", curveDTO.getResidualVariance());
+            put("warning", curveDTO.getWarning());
         }});
 
         CurveDTO created = modelMapper.map(curveRepository.findById(id.longValue()).get());
