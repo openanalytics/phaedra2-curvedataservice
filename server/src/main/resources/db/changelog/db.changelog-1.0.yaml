@@ -310,3 +310,13 @@ databaseChangeLog:
                   type: float4
                   constraints:
                     nullable: true
+  - changeSet:
+      id: 12
+      author: sberberovic
+      changes:
+        - sql:
+            sql: ALTER TABLE curve ALTER COLUMN warning TYPE VARCHAR;
+        - sql:
+            sql: ALTER TABLE curve ALTER COLUMN p_ic50_censor TYPE VARCHAR;
+        - sql:
+            sql: ALTER TABLE curve ALTER COLUMN p_ic50_error TYPE VARCHAR;
