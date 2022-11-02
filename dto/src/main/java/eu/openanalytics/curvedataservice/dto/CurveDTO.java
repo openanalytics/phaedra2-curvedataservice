@@ -20,6 +20,7 @@
  */
 package eu.openanalytics.curvedataservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import eu.openanalytics.phaedra.util.dto.validation.OnCreate;
 import eu.openanalytics.phaedra.util.dto.validation.OnUpdate;
 import lombok.*;
@@ -59,18 +60,28 @@ public class CurveDTO {
     private long[] wells;
     private float[] wellConcentrations;
     private float[] featureValues;
+    @JsonProperty(value = "xaxisLabels")
     private float[] xAxisLabels;
     private float[] plotDoseData;
     private float[] plotPredictionData;
     private float[] weights;
+    @JsonProperty(value = "pic50")
     private String pIC50;
+    @JsonProperty(value = "pic50Censor")
     private String pIC50Censor;
+    @JsonProperty(value = "pic50StdErr")
     private String pIC50StdErr;
+    @JsonProperty(value = "emax")
     private float eMax;
+    @JsonProperty(value = "emin")
     private float eMin;
+    @JsonProperty(value = "emaxConc")
     private float eMaxConc;
+    @JsonProperty(value = "eminConc")
     private float eMinConc;
+    @JsonProperty(value = "pic20")
     private float pIC20;
+    @JsonProperty(value = "pic80")
     private float pIC80;
     private float slope;
     private float bottom;

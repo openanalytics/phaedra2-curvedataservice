@@ -27,13 +27,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
+import org.testcontainers.containers.JdbcDatabaseContainer;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
 @SpringBootTest
+@Sql({"/jdbc/initial.sql"})
+@TestPropertySource(locations = "classpath:application-test.properties")
 public class CurveRepositoryTest {
     @Autowired
     private CurveRepository curveRepository;
+
+    @Container
+    private static JdbcDatabaseContainer postgreSQLContainer = new PostgreSQLContainer("postgres:13-alpine")
+            .withDatabaseName("phaedra2")
+            .withUrlParam("currentSchema","curvedata")
+            .withPassword("phaedra2")
+            .withUsername("phaedra2");
 
     @DynamicPropertySource
     static void registerPgProperties(DynamicPropertyRegistry registry) {
