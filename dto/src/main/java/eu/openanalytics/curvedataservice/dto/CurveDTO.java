@@ -72,22 +72,22 @@ public class CurveDTO {
     @JsonProperty(value = "pic50StdErr")
     private String pIC50StdErr;
     @JsonProperty(value = "emax")
-    private float eMax;
+    private Float eMax;
     @JsonProperty(value = "emin")
-    private float eMin;
+    private Float eMin;
     @JsonProperty(value = "emaxConc")
-    private float eMaxConc;
+    private Float eMaxConc;
     @JsonProperty(value = "eminConc")
-    private float eMinConc;
+    private Float eMinConc;
     @JsonProperty(value = "pic20")
-    private float pIC20;
+    private Float pIC20;
     @JsonProperty(value = "pic80")
-    private float pIC80;
-    private float slope;
-    private float bottom;
-    private float top;
-    private float slopeLowerCI;
-    private float slopeUpperCI;
-    private float residualVariance;
+    private Float pIC80;
+    private Float slope;
+    private Float bottom;
+    private Float top;
+    private Float slopeLowerCI;
+    private Float slopeUpperCI;
+    private Float residualVariance;
     private String warning;
 }
