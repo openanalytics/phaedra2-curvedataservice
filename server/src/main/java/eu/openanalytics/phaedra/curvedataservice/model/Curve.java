@@ -70,25 +70,25 @@ public class Curve {
     @Column("p_ic50_error")
     private String pIC50StdErr;
     @Column("e_max")
-    private float eMax;
+    private Float eMax;
     @Column("e_min")
-    private float eMin;
+    private Float eMin;
     @Column("e_max_conc")
-    private float eMaxConc;
+    private Float eMaxConc;
     @Column("e_min_conc")
-    private float eMinConc;
+    private Float eMinConc;
     @Column("p_ic20")
-    private float pIC20;
+    private Float pIC20;
     @Column("p_ic80")
-    private float pIC80;
-    private float slope;
-    private float bottom;
-    private float top;
+    private Float pIC80;
+    private Float slope;
+    private Float bottom;
+    private Float top;
     @Column("slope_lower_ci")
-    private float slopeLowerCI;
+    private Float slopeLowerCI;
     @Column("slope_upper_ci")
-    private float slopeUpperCI;
+    private Float slopeUpperCI;
     @Column("residual_variance")
-    private float residualVariance;
+    private Float residualVariance;
     private String warning;
 }
