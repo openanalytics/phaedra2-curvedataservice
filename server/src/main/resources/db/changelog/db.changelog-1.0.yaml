@@ -326,3 +326,15 @@ databaseChangeLog:
       changes:
         - sql:
             sql: ALTER TABLE curve ALTER COLUMN p_ic50 TYPE VARCHAR;
+  - changeSet:
+      id: 14
+      author: sberberovic
+      changes:
+        - addColumn:
+            tableName: curve
+            columns:
+              - column:
+                  name: substance_type
+                  type: VARCHAR
+                  constraints:
+                    nullable: true

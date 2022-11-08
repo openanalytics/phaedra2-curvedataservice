@@ -55,6 +55,7 @@ public class CurveDTO {
     @NotNull(message = "SubstanceName is mandatory", groups = {OnCreate.class})
     @Null(message = "SubstanceName cannot be changed", groups = {OnUpdate.class})
     private String substanceName;
+    private String substanceType;
     private Date fitDate;
     private String version;
     private long[] wells;

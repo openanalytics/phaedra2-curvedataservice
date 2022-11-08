@@ -35,6 +35,8 @@ public class Curve {
     private Long id;
     @Column("substance_name")
     private String substanceName;
+    @Column("substance_type")
+    private String substanceType;
     @NotNull
     @Column("plate_id")
     private Long plateId;

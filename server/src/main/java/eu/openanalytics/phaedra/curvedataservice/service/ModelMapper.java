@@ -27,6 +27,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.modelmapper.config.Configuration;
 import org.modelmapper.convention.NameTransformers;
 import org.modelmapper.convention.NamingConventions;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.stereotype.Service;
 
 import static java.lang.Float.NaN;
@@ -51,6 +52,7 @@ public class ModelMapper {
         Curve curve = new Curve();
         curve.setId(curveDTO.getId());
         curve.setSubstanceName(curveDTO.getSubstanceName());
+        curve.setSubstanceType(curveDTO.getSubstanceType());
         curve.setPlateId(curveDTO.getPlateId());
         curve.setFeatureId(curveDTO.getFeatureId());
         curve.setProtocolId(curveDTO.getProtocolId());
@@ -91,6 +93,7 @@ public class ModelMapper {
         return CurveDTO.builder()
                 .id(curve.getId())
                 .substanceName(curve.getSubstanceName())
+                .substanceType(curve.getSubstanceType())
                 .plateId(curve.getPlateId())
                 .featureId(curve.getFeatureId())
                 .protocolId(curve.getProtocolId())
