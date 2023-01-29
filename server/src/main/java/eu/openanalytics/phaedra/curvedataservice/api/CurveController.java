@@ -22,10 +22,12 @@ package eu.openanalytics.phaedra.curvedataservice.api;
 
 import eu.openanalytics.curvedataservice.dto.CurveDTO;
 import eu.openanalytics.phaedra.curvedataservice.service.CurveService;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,5 +52,14 @@ public class CurveController {
             return new ResponseEntity<>(curveService.getCurveByPlateId(plateId.get()), HttpStatus.OK);
 
         return new ResponseEntity<>(curveService.getAllCurves(), HttpStatus.OK);
+    }
+
+    @GetMapping("/curve/{plateId}/latest")
+    public ResponseEntity<List<CurveDTO>> getCurves(@PathVariable Long plateId) {
+        List<CurveDTO> results = curveService.getLatestCurveByPlateId(plateId);
+        if (CollectionUtils.isNotEmpty(results))
+            return new ResponseEntity<>(results, HttpStatus.OK);
+
+        return new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK);
     }
 }

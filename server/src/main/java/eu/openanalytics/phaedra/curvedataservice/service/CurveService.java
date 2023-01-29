@@ -111,6 +111,14 @@ public class CurveService {
         return Collections.emptyList();
     }
 
+    public List<CurveDTO> getLatestCurveByPlateId(Long plateId) {
+        List<Curve> curves = curveRepository.findLatestCurvesByPlateId(plateId);
+        if (CollectionUtils.isNotEmpty(curves))
+            return curves.stream().map(c -> modelMapper.map(c)).collect(Collectors.toList());
+
+        return Collections.emptyList();
+    }
+
     public List<CurveDTO> getAllCurves() {
         List<Curve> curves = (List<Curve>) curveRepository.findAll();
         if (CollectionUtils.isNotEmpty(curves))

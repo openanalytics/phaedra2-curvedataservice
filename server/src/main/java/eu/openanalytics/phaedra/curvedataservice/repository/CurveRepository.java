@@ -21,6 +21,7 @@
 package eu.openanalytics.phaedra.curvedataservice.repository;
 
 import eu.openanalytics.phaedra.curvedataservice.model.Curve;
+import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -28,5 +29,8 @@ import java.util.List;
 
 @Repository
 public interface CurveRepository extends CrudRepository<Curve, Long> {
-    public List<Curve> findCurveByPlateId(Long plateId);
+    List<Curve> findCurveByPlateId(Long plateId);
+
+    @Query("select * from curve where plate_id = :plateId order by fit_date desc limit (select count(distinct substance_name) from curve where plate_id = :plateId)")
+    List<Curve> findLatestCurvesByPlateId(Long plateId);
 }
