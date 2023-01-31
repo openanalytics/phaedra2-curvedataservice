@@ -32,11 +32,7 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
-import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,14 +51,6 @@ public class CurveServiceTest {
     private ModelMapper modelMapper;
 
     private ObjectMapper objectMapper = new ObjectMapper();
-
-    @Container
-    private static JdbcDatabaseContainer postgresSQLContaioner = new PostgreSQLContainer(DockerImageName.parse("public.ecr.aws/docker/library/postgres:13-alpine")
-            .asCompatibleSubstituteFor("postgres:13-alpine"))
-            .withDatabaseName("phaedra2")
-            .withUrlParam("currentSchema","curvedata")
-            .withPassword("phaedra2")
-            .withUsername("phaedra2");
 
     @DynamicPropertySource
     static void registerPgProperties(DynamicPropertyRegistry registry) {
