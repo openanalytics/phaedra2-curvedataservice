@@ -40,8 +40,8 @@ public class Containers {
     public static final PostgreSQLContainer<?> postgreSQLContainer;
 
     static {
-        postgreSQLContainer = new PostgreSQLContainer<>(DockerImageName.parse("public.ecr.aws/docker/library/postgres:13-alpine")
-                .asCompatibleSubstituteFor("postgres:13-alpine"))
+        postgreSQLContainer = new PostgreSQLContainer<>(DockerImageName.parse("registry.openanalytics.eu/library/postgres:13-alpine")
+                .asCompatibleSubstituteFor(PostgreSQLContainer.IMAGE))
                 .withUrlParam("currentSchema","curvedata");
 
         postgreSQLContainer.start();
