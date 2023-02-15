@@ -5,3 +5,12 @@
 /server/phaedra2-curvedataservice-server.iml
 .DS_Store
 .DS_Store?
+
+# Eclipse IDE files
+/target/
+.settings/
+.project
+.classpath
+/client/target/
+/server/target/
+/dto/target/
