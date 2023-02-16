@@ -49,8 +49,6 @@ public class CurveService {
 
     private final DataSource dataSource;
 
-    private final KafkaTemplate<String, Object> kafkaTemplate;
-
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public CurveDTO createCurve(CurveDTO curveDTO) {
@@ -93,14 +91,6 @@ public class CurveService {
         CurveDTO created = modelMapper.map(curveRepository.findById(id.longValue()).get());
         logger.info("A new curve for " + created.getSubstanceName() + " and featureId " + created.getFeatureId() + " has been created!");
         return created;
-    }
-
-    @KafkaListener(topics = "curvedata-topic", groupId = "curvedata-service")
-    public void onCreateCurveMessage(CurveDTO curveDTO, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String msgKey) {
-        if (msgKey.equals("createCurve")) {
-            logger.info("Create new curve for " + curveDTO.getSubstanceName() + " and featureId " + curveDTO.getFeatureId());
-            createCurve(curveDTO);
-        }
     }
 
     public List<CurveDTO> getCurveByPlateId(Long plateId) {
