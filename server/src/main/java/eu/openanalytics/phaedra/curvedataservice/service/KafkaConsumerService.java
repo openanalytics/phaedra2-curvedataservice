@@ -21,7 +21,7 @@ public class KafkaConsumerService {
     CurveService curveService;
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @KafkaListener(topics = TOPIC_CURVEDATA, groupId = GROUP_ID, filter="saveCurveDataEventFilter")
+    @KafkaListener(topics = TOPIC_CURVEDATA, groupId = GROUP_ID)
     public void onCreateCurveMessage(CurveDTO curveDTO, @Header(KafkaHeaders.RECEIVED_KEY) String msgKey) {
         if (!EVENT_SAVE_CURVE.equalsIgnoreCase(msgKey)) return;
         logger.info("Create new curve for " + curveDTO.getSubstanceName() + " and featureId " + curveDTO.getFeatureId());
