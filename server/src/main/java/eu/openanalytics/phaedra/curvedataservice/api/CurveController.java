@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/curves")
 public class CurveController {
 
     private final CurveService curveService;
@@ -40,21 +41,21 @@ public class CurveController {
         this.curveService = curveService;
     }
 
-    @PostMapping("/curve")
+    @PostMapping
     public ResponseEntity<CurveDTO> createCurve(@RequestBody CurveDTO curveDTO) {
         CurveDTO result = curveService.createCurve(curveDTO);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
-    @GetMapping("/curve")
-    public ResponseEntity<List<CurveDTO>> getCurve(@RequestParam Optional<Long> plateId) {
+    @GetMapping
+    public ResponseEntity<List<CurveDTO>> getCurves(@RequestParam Optional<Long> plateId) {
         if (plateId.isPresent())
             return new ResponseEntity<>(curveService.getCurveByPlateId(plateId.get()), HttpStatus.OK);
 
         return new ResponseEntity<>(curveService.getAllCurves(), HttpStatus.OK);
     }
 
-    @GetMapping("/curve/{plateId}/latest")
+    @GetMapping("/{plateId}/latest")
     public ResponseEntity<List<CurveDTO>> getCurves(@PathVariable Long plateId) {
         List<CurveDTO> results = curveService.getLatestCurveByPlateId(plateId);
         if (CollectionUtils.isNotEmpty(results))
