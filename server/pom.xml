@@ -142,7 +142,7 @@
 							</build>
 						</image>
                         <image>
-                            <name>${docker.repoPrefix}${docker.imageName}.liquibase</name>
+                        	<name>${docker.imageName}.liquibase</name>
                             <build>
                                 <dockerFile>${project.basedir}/Dockerfile.db</dockerFile>
                                 <tags>
