@@ -40,8 +40,6 @@ public class Containers {
     public static final PostgreSQLContainer<?> postgreSQLContainer;
 
     static {
-    	System.out.println("Registry username: " + System.getProperty("registry.username"));
-    	
         postgreSQLContainer = new PostgreSQLContainer<>("postgres:13-alpine")
                 .withUrlParam("currentSchema","curvedata");
         postgreSQLContainer.start();
