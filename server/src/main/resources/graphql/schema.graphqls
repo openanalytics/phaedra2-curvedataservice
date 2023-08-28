@@ -44,5 +44,5 @@ type CurveDTO {
 }
 
 type Query {
-    getCurvesByPlateId: [CurveDTO]
+    getCurvesByPlateId(plateId: ID): [CurveDTO]
 }
