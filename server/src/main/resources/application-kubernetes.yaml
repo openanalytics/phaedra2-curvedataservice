@@ -6,3 +6,6 @@ spring:
   cloud:
     kubernetes:
       enabled: true
+  graphql:
+    graphiql:
+      enabled: true
