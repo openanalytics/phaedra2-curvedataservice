@@ -1,0 +1,48 @@
+scalar Date
+
+type CurvePropertyDTO {
+    curveId: ID
+    name: String
+    stringValue: String
+    numericValue: Float
+}
+
+type CurveDTO {
+    id: ID
+    plateId: ID
+    protocolId: ID
+    featureId: ID
+    resultSetId: ID
+    substanceName: String
+    substanceType: String
+    fitDate: Date
+    version: String
+    wells: [ID]
+    wellConcentrations: [Float]
+    featureValues: [Float]
+    xAxisLabels: [Float]
+    plotDoseData: [Float]
+    plotPredictionData: [Float]
+    weights: [Float]
+    curveProperties: [CurvePropertyDTO]
+    pIC50: String
+    pIC50Censor: String
+    pIC50StdErr: String
+    eMax: Float
+    eMin: Float
+    eMaxConc: Float
+    eMinConc: Float
+    pIC20: Float
+    pIC80: Float
+    slope: Float
+    bottom: Float
+    top: Float
+    slopeLowerCI: Float
+    slopeUpperCI: Float
+    residualVariance: Float
+    warning: String
+}
+
+type Query {
+    getCurvesByPlateId: [CurveDTO]
+}

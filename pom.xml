@@ -8,7 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../phaedra2-parent</relativePath>
     </parent>
-    
+
     <packaging>pom</packaging>
 
     <artifactId>phaedra2-curvedataservice</artifactId>
@@ -16,6 +16,7 @@
 
     <properties>
         <java.version>16</java.version>
+        <spring-cloud.version>2021.0.3</spring-cloud.version>
     </properties>
 
     <modules>
@@ -67,13 +68,6 @@
                             <goal>format</goal>
                         </goals>
                     </execution>
-                    <!--                    <execution>-->
-                    <!--                        <id>check-copyright-headers</id>-->
-                    <!--                        <phase>package</phase>-->
-                    <!--                        <goals>-->
-                    <!--                            <goal>check</goal>-->
-                    <!--                        </goals>-->
-                    <!--                    </execution>-->
                 </executions>
             </plugin>
         </plugins>

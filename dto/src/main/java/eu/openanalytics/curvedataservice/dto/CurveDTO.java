@@ -29,6 +29,7 @@ import lombok.experimental.NonFinal;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.util.Date;
+import java.util.List;
 
 @Value
 @Builder
@@ -66,6 +67,7 @@ public class CurveDTO {
     private float[] plotDoseData;
     private float[] plotPredictionData;
     private float[] weights;
+    private List<CurvePropertyDTO> curveProperties;
     @JsonProperty(value = "pic50")
     private String pIC50;
     @JsonProperty(value = "pic50Censor")
