@@ -22,12 +22,10 @@ package eu.openanalytics.phaedra.curvedataservice.api;
 
 import eu.openanalytics.curvedataservice.dto.CurveDTO;
 import eu.openanalytics.phaedra.curvedataservice.service.CurveService;
-import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
-import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -42,11 +40,17 @@ public class DoseResponseCurveGraphQLController {
 
     @QueryMapping
     public List<CurveDTO> getCurvesByPlateId(@Argument long plateId) {
-        List<CurveDTO> results = curveService.getLatestCurveByPlateId(plateId);
-        if (CollectionUtils.isNotEmpty(results))
-            return results;
+        return curveService.getLatestCurveByPlateId(plateId);
+    }
 
-        return Collections.emptyList();
+    @QueryMapping
+    public List<CurveDTO> getCurvesBySubstanceName(@Argument String substanceName) {
+        return curveService.getCurvesBySubstanceName(substanceName);
+    }
+
+    @QueryMapping
+    public List<CurveDTO> getCurvesBySubstanceType(@Argument String substanceType) {
+        return curveService.getCurvesBySubstanceType(substanceType);
     }
 
 }

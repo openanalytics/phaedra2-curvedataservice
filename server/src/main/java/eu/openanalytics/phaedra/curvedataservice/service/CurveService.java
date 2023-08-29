@@ -115,4 +115,19 @@ public class CurveService {
             return curves.stream().map(c -> modelMapper.map(c)).collect(Collectors.toList());
         return Collections.emptyList();
     }
+
+    public List<CurveDTO> getCurvesBySubstanceName(String substanceName) {
+        List<Curve> result = curveRepository.findCurvesBySubstanceName(substanceName);
+        if (CollectionUtils.isNotEmpty(result))
+            return result.stream().map(r -> modelMapper.map(r)).collect(Collectors.toList());
+        return Collections.emptyList();
+    }
+
+    public List<CurveDTO> getCurvesBySubstanceType(String substanceType) {
+        List<Curve> result = curveRepository.findCurvesBySubstanceType(substanceType);
+        if (CollectionUtils.isNotEmpty(result))
+            return result.stream().map(r -> modelMapper.map(r)).collect(Collectors.toList());
+        return Collections.emptyList();
+    }
+
 }
