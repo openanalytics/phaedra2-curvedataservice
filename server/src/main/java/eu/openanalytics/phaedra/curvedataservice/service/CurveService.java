@@ -130,4 +130,10 @@ public class CurveService {
         return Collections.emptyList();
     }
 
+    public List<CurveDTO> getCurvesByFeatureId(long featureId) {
+        List<Curve> result = curveRepository.findCurvesByFeatureId(featureId);
+        if (CollectionUtils.isNotEmpty(result))
+            return result.stream().map(r -> modelMapper.map(r)).collect(Collectors.toList());
+        return Collections.emptyList();
+    }
 }

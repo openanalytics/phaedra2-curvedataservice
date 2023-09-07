@@ -47,4 +47,5 @@ type Query {
     getCurvesByPlateId(plateId: ID): [CurveDTO]
     getCurvesBySubstanceName(substanceName: String): [CurveDTO]
     getCurvesBySubstanceType(substanceType: String): [CurveDTO]
+    getCurvesByFeatureId(featureId: ID): [CurveDTO]
 }

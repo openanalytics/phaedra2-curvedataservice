@@ -53,4 +53,9 @@ public class DoseResponseCurveGraphQLController {
         return curveService.getCurvesBySubstanceType(substanceType);
     }
 
+    @QueryMapping
+    public List<CurveDTO> getCurvesByFeatureId(@Argument long featureId) {
+        return curveService.getCurvesByFeatureId(featureId);
+    }
+
 }

@@ -39,4 +39,7 @@ public interface CurveRepository extends CrudRepository<Curve, Long> {
 
     @Query("select * from curve where substance_type = :substanceType order by  fit_date desc")
     List<Curve> findCurvesBySubstanceType(String substanceType);
+
+    @Query("select * from curve where feature_id = :featureId order by fit_date desc")
+    List<Curve> findCurvesByFeatureId(long featureId);
 }
