@@ -1,10 +1,11 @@
 scalar Date
+scalar FloatNaN
 
 type CurvePropertyDTO {
     curveId: ID
     name: String
     stringValue: String
-    numericValue: Float
+    numericValue: FloatNaN
 }
 
 type CurveDTO {
@@ -28,18 +29,18 @@ type CurveDTO {
     pIC50: String
     pIC50Censor: String
     pIC50StdErr: String
-    eMax: Float
-    eMin: Float
-    eMaxConc: Float
-    eMinConc: Float
-    pIC20: Float
-    pIC80: Float
-    slope: Float
-    bottom: Float
-    top: Float
-    slopeLowerCI: Float
-    slopeUpperCI: Float
-    residualVariance: Float
+    eMax: FloatNaN
+    eMin: FloatNaN
+    eMaxConc: FloatNaN
+    eMinConc: FloatNaN
+    pIC20: FloatNaN
+    pIC80: FloatNaN
+    slope: FloatNaN
+    bottom: FloatNaN
+    top: FloatNaN
+    slopeLowerCI: FloatNaN
+    slopeUpperCI: FloatNaN
+    residualVariance: FloatNaN
     warning: String
 }
 
