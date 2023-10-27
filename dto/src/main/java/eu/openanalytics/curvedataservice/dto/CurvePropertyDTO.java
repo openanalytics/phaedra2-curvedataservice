@@ -34,17 +34,12 @@ public class CurvePropertyDTO {
     String name;
     String stringValue;
     Float numericValue;
-    byte[] binaryValue;
 
     public boolean isNumeric() {
-        return numericValue != null && stringValue == null && binaryValue == null;
+        return numericValue != null && stringValue == null;
     }
 
     public boolean isString() {
-        return stringValue != null && numericValue == null && binaryValue == null;
-    }
-
-    public boolean isBinary() {
-        return binaryValue != null && numericValue == null && stringValue == null;
+        return stringValue != null && numericValue == null;
     }
 }

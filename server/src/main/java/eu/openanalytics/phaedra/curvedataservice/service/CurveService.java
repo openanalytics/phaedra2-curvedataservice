@@ -28,11 +28,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.KafkaHeaders;
-import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
@@ -55,7 +50,7 @@ public class CurveService {
         // workaround for https://github.com/spring-projects/spring-data-jdbc/issues/1033
         var simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("curve").usingGeneratedKeyColumns("id");
         var curve = modelMapper.map(curveDTO);
-        Number id = simpleJdbcInsert.executeAndReturnKey(new HashMap<>() {{
+        Number curveId = simpleJdbcInsert.executeAndReturnKey(new HashMap<>() {{
             put("substance_name", curve.getSubstanceName());
             put("plate_id", curve.getPlateId());
             put("feature_id", curve.getFeatureId());
@@ -70,25 +65,37 @@ public class CurveService {
             put("plot_dose_data", curve.getPlotDoseData());
             put("plot_prediction_data", curve.getPlotPredictionData());
             put("weights", curve.getWeights());
-            put("p_ic50", curve.getPIC50());
-            put("p_ic50_censor", curve.getPIC50Censor());
-            put("p_ic50_error", curve.getPIC50StdErr());
-            put("e_max", curve.getEMax());
-            put("e_min", curve.getEMin());
-            put("e_max_conc", curve.getEMaxConc());
-            put("e_min_conc", curve.getEMinConc());
-            put("p_ic20", curve.getPIC20());
-            put("p_ic80", curve.getPIC80());
-            put("slope", curve.getSlope());
-            put("bottom", curve.getBottom());
-            put("top", curve.getTop());
-            put("slope_lower_ci", curve.getSlopeLowerCI());
-            put("slope_upper_ci", curve.getSlopeUpperCI());
-            put("residual_variance", curve.getResidualVariance());
-            put("warning", curve.getWarning());
+            put("p_ic50", curve.getPIC50()); //TODO: Remove after fully replaced by plate_property table
+            put("p_ic50_censor", curve.getPIC50Censor()); //TODO: Remove after fully replaced by plate_property table
+            put("p_ic50_error", curve.getPIC50StdErr()); //TODO: Remove after fully replaced by plate_property table
+            put("e_max", curve.getEMax()); //TODO: Remove after fully replaced by plate_property table
+            put("e_min", curve.getEMin()); //TODO: Remove after fully replaced by plate_property table
+            put("e_max_conc", curve.getEMaxConc()); //TODO: Remove after fully replaced by plate_property table
+            put("e_min_conc", curve.getEMinConc()); //TODO: Remove after fully replaced by plate_property table
+            put("p_ic20", curve.getPIC20()); //TODO: Remove after fully replaced by plate_property table
+            put("p_ic80", curve.getPIC80()); //TODO: Remove after fully replaced by plate_property table
+            put("slope", curve.getSlope()); //TODO: Remove after fully replaced by plate_property table
+            put("bottom", curve.getBottom()); //TODO: Remove after fully replaced by plate_property table
+            put("top", curve.getTop()); //TODO: Remove after fully replaced by plate_property table
+            put("slope_lower_ci", curve.getSlopeLowerCI()); //TODO: Remove after fully replaced by plate_property table
+            put("slope_upper_ci", curve.getSlopeUpperCI()); //TODO: Remove after fully replaced by plate_property table
+            put("residual_variance", curve.getResidualVariance()); //TODO: Remove after fully replaced by plate_property table
+            put("warning", curve.getWarning()); //TODO: Remove after fully replaced by plate_property table
         }});
 
-        CurveDTO created = modelMapper.map(curveRepository.findById(id.longValue()).get());
+        if (curveId != null && CollectionUtils.isNotEmpty(curveDTO.getCurveProperties())) {
+            var insertCurveProperty = new SimpleJdbcInsert(dataSource).withTableName("curve_property").usingGeneratedKeyColumns("id");
+            curveDTO.getCurveProperties().forEach(curvePropertyDTO -> {
+                insertCurveProperty.executeAndReturnKey(new HashMap<>() {{
+                    put("curve_id", curveId);
+                    put("property_name", curvePropertyDTO.getName());
+                    put("property_numeric_value", curvePropertyDTO.getNumericValue());
+                    put("property_string_value", curvePropertyDTO.getStringValue());
+                }});
+            });
+        }
+
+        CurveDTO created = modelMapper.map(curveRepository.findById(curveId.longValue()).get());
         logger.info("A new curve for " + created.getSubstanceName() + " and featureId " + created.getFeatureId() + " has been created!");
         return created;
     }

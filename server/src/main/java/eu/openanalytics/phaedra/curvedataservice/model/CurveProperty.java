@@ -22,9 +22,20 @@ package eu.openanalytics.phaedra.curvedataservice.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 
 @Data()
 @NoArgsConstructor
 public class CurveProperty {
-
+    @Id
+    private Long id;
+    @Column("curve_id")
+    private Long curveId;
+    @Column("property_name")
+    private String name;
+    @Column("property_string_value")
+    private String stringValue;
+    @Column("property_numeric_value")
+    private Float numericValue;
 }
