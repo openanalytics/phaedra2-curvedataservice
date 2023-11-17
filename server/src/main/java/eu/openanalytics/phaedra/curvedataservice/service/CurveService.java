@@ -65,22 +65,22 @@ public class CurveService {
             put("plot_dose_data", curve.getPlotDoseData());
             put("plot_prediction_data", curve.getPlotPredictionData());
             put("weights", curve.getWeights());
-            put("p_ic50", curve.getPIC50()); //TODO: Remove after fully replaced by plate_property table
-            put("p_ic50_censor", curve.getPIC50Censor()); //TODO: Remove after fully replaced by plate_property table
-            put("p_ic50_error", curve.getPIC50StdErr()); //TODO: Remove after fully replaced by plate_property table
-            put("e_max", curve.getEMax()); //TODO: Remove after fully replaced by plate_property table
-            put("e_min", curve.getEMin()); //TODO: Remove after fully replaced by plate_property table
-            put("e_max_conc", curve.getEMaxConc()); //TODO: Remove after fully replaced by plate_property table
-            put("e_min_conc", curve.getEMinConc()); //TODO: Remove after fully replaced by plate_property table
-            put("p_ic20", curve.getPIC20()); //TODO: Remove after fully replaced by plate_property table
-            put("p_ic80", curve.getPIC80()); //TODO: Remove after fully replaced by plate_property table
-            put("slope", curve.getSlope()); //TODO: Remove after fully replaced by plate_property table
-            put("bottom", curve.getBottom()); //TODO: Remove after fully replaced by plate_property table
-            put("top", curve.getTop()); //TODO: Remove after fully replaced by plate_property table
-            put("slope_lower_ci", curve.getSlopeLowerCI()); //TODO: Remove after fully replaced by plate_property table
-            put("slope_upper_ci", curve.getSlopeUpperCI()); //TODO: Remove after fully replaced by plate_property table
-            put("residual_variance", curve.getResidualVariance()); //TODO: Remove after fully replaced by plate_property table
-            put("warning", curve.getWarning()); //TODO: Remove after fully replaced by plate_property table
+//            put("p_ic50", curve.getPIC50()); //TODO: Remove after fully replaced by plate_property table
+//            put("p_ic50_censor", curve.getPIC50Censor()); //TODO: Remove after fully replaced by plate_property table
+//            put("p_ic50_error", curve.getPIC50StdErr()); //TODO: Remove after fully replaced by plate_property table
+//            put("e_max", curve.getEMax()); //TODO: Remove after fully replaced by plate_property table
+//            put("e_min", curve.getEMin()); //TODO: Remove after fully replaced by plate_property table
+//            put("e_max_conc", curve.getEMaxConc()); //TODO: Remove after fully replaced by plate_property table
+//            put("e_min_conc", curve.getEMinConc()); //TODO: Remove after fully replaced by plate_property table
+//            put("p_ic20", curve.getPIC20()); //TODO: Remove after fully replaced by plate_property table
+//            put("p_ic80", curve.getPIC80()); //TODO: Remove after fully replaced by plate_property table
+//            put("slope", curve.getSlope()); //TODO: Remove after fully replaced by plate_property table
+//            put("bottom", curve.getBottom()); //TODO: Remove after fully replaced by plate_property table
+//            put("top", curve.getTop()); //TODO: Remove after fully replaced by plate_property table
+//            put("slope_lower_ci", curve.getSlopeLowerCI()); //TODO: Remove after fully replaced by plate_property table
+//            put("slope_upper_ci", curve.getSlopeUpperCI()); //TODO: Remove after fully replaced by plate_property table
+//            put("residual_variance", curve.getResidualVariance()); //TODO: Remove after fully replaced by plate_property table
+//            put("warning", curve.getWarning()); //TODO: Remove after fully replaced by plate_property table
         }});
 
         if (curveId != null && CollectionUtils.isNotEmpty(curveDTO.getCurveProperties())) {
