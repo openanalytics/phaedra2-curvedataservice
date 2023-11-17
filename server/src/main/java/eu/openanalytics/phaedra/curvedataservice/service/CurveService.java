@@ -83,17 +83,17 @@ public class CurveService {
 //            put("warning", curve.getWarning()); //TODO: Remove after fully replaced by plate_property table
         }});
 
-        if (curveId != null && CollectionUtils.isNotEmpty(curveDTO.getCurveProperties())) {
-            var insertCurveProperty = new SimpleJdbcInsert(dataSource).withTableName("curve_property").usingGeneratedKeyColumns("id");
-            curveDTO.getCurveProperties().forEach(curvePropertyDTO -> {
-                insertCurveProperty.executeAndReturnKey(new HashMap<>() {{
-                    put("curve_id", curveId);
-                    put("property_name", curvePropertyDTO.getName());
-                    put("property_numeric_value", curvePropertyDTO.getNumericValue());
-                    put("property_string_value", curvePropertyDTO.getStringValue());
-                }});
-            });
-        }
+//        if (curveId != null && CollectionUtils.isNotEmpty(curveDTO.getCurveProperties())) {
+//            var insertCurveProperty = new SimpleJdbcInsert(dataSource).withTableName("curve_property").usingGeneratedKeyColumns("id");
+//            curveDTO.getCurveProperties().forEach(curvePropertyDTO -> {
+//                insertCurveProperty.executeAndReturnKey(new HashMap<>() {{
+//                    put("curve_id", curveId);
+//                    put("property_name", curvePropertyDTO.getName());
+//                    put("property_numeric_value", curvePropertyDTO.getNumericValue());
+//                    put("property_string_value", curvePropertyDTO.getStringValue());
+//                }});
+//            });
+//        }
 
         CurveDTO created = modelMapper.map(curveRepository.findById(curveId.longValue()).get());
         logger.info("A new curve for " + created.getSubstanceName() + " and featureId " + created.getFeatureId() + " has been created!");
