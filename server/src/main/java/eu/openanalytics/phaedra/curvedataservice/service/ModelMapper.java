@@ -66,22 +66,22 @@ public class ModelMapper {
         curve.setFeatureValues(curveDTO.getFeatureValues());
         curve.setWellConcentrations(curveDTO.getWellConcentrations());
         curve.setWeights(curveDTO.getWeights());
-        curve.setPIC50(curveDTO.getPIC50());
-        curve.setPIC50Censor(curveDTO.getPIC50Censor());
-        curve.setPIC50StdErr(curveDTO.getPIC50StdErr());
-        curve.setEMax(curveDTO.getEMax().isNaN() ? NaN : curveDTO.getEMax());
-        curve.setEMin(curveDTO.getEMin().isNaN() ? NaN : curveDTO.getEMin());
-        curve.setEMaxConc(curveDTO.getEMaxConc().isNaN() ? NaN : curveDTO.getEMaxConc());
-        curve.setEMinConc(curveDTO.getEMinConc().isNaN() ? NaN : curveDTO.getEMinConc());
-        curve.setPIC20(curveDTO.getPIC20().isNaN() ? NaN : curveDTO.getPIC20());
-        curve.setPIC80(curveDTO.getPIC80().isNaN() ? NaN : curveDTO.getPIC80());
-        curve.setSlope(curveDTO.getSlope().isNaN() ? NaN : curveDTO.getSlope());
-        curve.setBottom(curveDTO.getBottom().isNaN() ? NaN : curveDTO.getBottom());
-        curve.setTop(curveDTO.getTop().isNaN() ? NaN : curveDTO.getTop());
-        curve.setSlopeLowerCI(curveDTO.getSlopeLowerCI().isNaN() ? NaN : curveDTO.getSlopeLowerCI());
-        curve.setSlopeUpperCI(curveDTO.getSlopeUpperCI().isNaN() ? NaN : curveDTO.getSlopeUpperCI());
-        curve.setResidualVariance(curveDTO.getResidualVariance().isNaN() ? NaN : curveDTO.getResidualVariance());
-        curve.setWarning(curveDTO.getWarning());
+//        curve.setPIC50(curveDTO.getPIC50());
+//        curve.setPIC50Censor(curveDTO.getPIC50Censor());
+//        curve.setPIC50StdErr(curveDTO.getPIC50StdErr());
+//        curve.setEMax(curveDTO.getEMax().isNaN() ? NaN : curveDTO.getEMax());
+//        curve.setEMin(curveDTO.getEMin().isNaN() ? NaN : curveDTO.getEMin());
+//        curve.setEMaxConc(curveDTO.getEMaxConc().isNaN() ? NaN : curveDTO.getEMaxConc());
+//        curve.setEMinConc(curveDTO.getEMinConc().isNaN() ? NaN : curveDTO.getEMinConc());
+//        curve.setPIC20(curveDTO.getPIC20().isNaN() ? NaN : curveDTO.getPIC20());
+//        curve.setPIC80(curveDTO.getPIC80().isNaN() ? NaN : curveDTO.getPIC80());
+//        curve.setSlope(curveDTO.getSlope().isNaN() ? NaN : curveDTO.getSlope());
+//        curve.setBottom(curveDTO.getBottom().isNaN() ? NaN : curveDTO.getBottom());
+//        curve.setTop(curveDTO.getTop().isNaN() ? NaN : curveDTO.getTop());
+//        curve.setSlopeLowerCI(curveDTO.getSlopeLowerCI().isNaN() ? NaN : curveDTO.getSlopeLowerCI());
+//        curve.setSlopeUpperCI(curveDTO.getSlopeUpperCI().isNaN() ? NaN : curveDTO.getSlopeUpperCI());
+//        curve.setResidualVariance(curveDTO.getResidualVariance().isNaN() ? NaN : curveDTO.getResidualVariance());
+//        curve.setWarning(curveDTO.getWarning());
 
         return curve;
     }
