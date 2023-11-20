@@ -21,7 +21,10 @@
 package eu.openanalytics.phaedra.curvedataservice.service;
 
 import eu.openanalytics.curvedataservice.dto.CurveDTO;
+import eu.openanalytics.curvedataservice.dto.CurvePropertyDTO;
 import eu.openanalytics.phaedra.curvedataservice.model.Curve;
+import eu.openanalytics.phaedra.curvedataservice.model.CurveProperty;
+import eu.openanalytics.phaedra.curvedataservice.repository.CurvePropertyRepository;
 import eu.openanalytics.phaedra.curvedataservice.repository.CurveRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
@@ -41,6 +44,7 @@ import java.util.stream.Collectors;
 public class CurveService {
     private final ModelMapper modelMapper;
     private final CurveRepository curveRepository;
+    private final CurvePropertyRepository curvePropertyRepository;
 
     private final DataSource dataSource;
 
@@ -85,20 +89,17 @@ public class CurveService {
 
         if (curveId != null && CollectionUtils.isNotEmpty(curveDTO.getCurveProperties())) {
             logger.info("Curve properties: " + curveDTO.getCurveProperties());
-//            var insertCurveProperty = new SimpleJdbcInsert(dataSource).withTableName("curve_property").usingGeneratedKeyColumns("id");
-//            curveDTO.getCurveProperties().forEach(curvePropertyDTO -> {
-//                insertCurveProperty.executeAndReturnKey(new HashMap<>() {{
-//                    put("curve_id", curveId);
-//                    put("property_name", curvePropertyDTO.getName());
-//                    put("property_numeric_value", curvePropertyDTO.getNumericValue());
-//                    put("property_string_value", curvePropertyDTO.getStringValue());
-//                }});
-//            });
+            curveDTO.getCurveProperties().forEach(curvePropertyDTO -> {
+                CurveProperty curveProperty = modelMapper.map(curvePropertyDTO.withCurveId(curveId.longValue()));
+                curvePropertyRepository.save(curveProperty);
+            });
         }
 
         CurveDTO created = modelMapper.map(curveRepository.findById(curveId.longValue()).get());
+        List<CurvePropertyDTO> curveProperties = curvePropertyRepository.findCurvePropertyByCurveId(curveId.longValue())
+                .stream().map(curveProperty -> modelMapper.map(curveProperty)).toList();
         logger.info("A new curve for " + created.getSubstanceName() + " and featureId " + created.getFeatureId() + " has been created!");
-        return created;
+        return created.withCurveProperties(curveProperties);
     }
 
     public List<CurveDTO> getCurveByPlateId(Long plateId) {
