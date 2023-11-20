@@ -83,7 +83,8 @@ public class CurveService {
 //            put("warning", curve.getWarning()); //TODO: Remove after fully replaced by plate_property table
         }});
 
-//        if (curveId != null && CollectionUtils.isNotEmpty(curveDTO.getCurveProperties())) {
+        if (curveId != null && CollectionUtils.isNotEmpty(curveDTO.getCurveProperties())) {
+            logger.info("Curve properties: " + curveDTO.getCurveProperties());
 //            var insertCurveProperty = new SimpleJdbcInsert(dataSource).withTableName("curve_property").usingGeneratedKeyColumns("id");
 //            curveDTO.getCurveProperties().forEach(curvePropertyDTO -> {
 //                insertCurveProperty.executeAndReturnKey(new HashMap<>() {{
@@ -93,7 +94,7 @@ public class CurveService {
 //                    put("property_string_value", curvePropertyDTO.getStringValue());
 //                }});
 //            });
-//        }
+        }
 
         CurveDTO created = modelMapper.map(curveRepository.findById(curveId.longValue()).get());
         logger.info("A new curve for " + created.getSubstanceName() + " and featureId " + created.getFeatureId() + " has been created!");
