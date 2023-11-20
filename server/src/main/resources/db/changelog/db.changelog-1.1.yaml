@@ -36,7 +36,7 @@ databaseChangeLog:
                     nullable: true
         - addForeignKeyConstraint:
             constraintName: curve_id_fkey
-            baseTableName: curve_properties
+            baseTableName: curve_property
             baseColumnNames: curve_id
             referencedTableName: curve
             referencedColumnNames: id

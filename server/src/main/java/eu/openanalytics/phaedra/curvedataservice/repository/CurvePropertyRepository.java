@@ -1,6 +1,5 @@
 package eu.openanalytics.phaedra.curvedataservice.repository;
 
-import eu.openanalytics.phaedra.curvedataservice.model.Curve;
 import eu.openanalytics.phaedra.curvedataservice.model.CurveProperty;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
