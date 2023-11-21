@@ -37,6 +37,7 @@ import javax.sql.DataSource;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -100,6 +101,20 @@ public class CurveService {
                 .stream().map(curveProperty -> modelMapper.map(curveProperty)).toList();
         logger.info("A new curve for " + created.getSubstanceName() + " and featureId " + created.getFeatureId() + " has been created!");
         return created.withCurveProperties(curveProperties);
+    }
+
+    public CurveDTO getCurveById(Long curveId) {
+        Optional<Curve> curve = curveRepository.findById(curveId);
+        if (curve.isPresent()) {
+            List<CurveProperty> curveProperties = curvePropertyRepository.findCurvePropertyByCurveId(curveId);
+
+            CurveDTO curveDTO = modelMapper.map(curve.get())
+                    .withCurveProperties(curveProperties.stream()
+                            .map(curveProperty -> modelMapper.map(curveProperty))
+                            .toList());
+            return curveDTO;
+        }
+        return null;
     }
 
     public List<CurveDTO> getCurveByPlateId(Long plateId) {
