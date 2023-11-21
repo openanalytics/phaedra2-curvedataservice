@@ -34,10 +34,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -107,7 +104,6 @@ public class CurveService {
         Optional<Curve> curve = curveRepository.findById(curveId);
         if (curve.isPresent()) {
             List<CurveProperty> curveProperties = curvePropertyRepository.findCurvePropertyByCurveId(curveId);
-
             CurveDTO curveDTO = modelMapper.map(curve.get())
                     .withCurveProperties(curveProperties.stream()
                             .map(curveProperty -> modelMapper.map(curveProperty))
@@ -119,9 +115,18 @@ public class CurveService {
 
     public List<CurveDTO> getCurveByPlateId(Long plateId) {
         List<Curve> curves = curveRepository.findCurveByPlateId(plateId);
-        if (CollectionUtils.isNotEmpty(curves))
-            return curves.stream().map(c -> modelMapper.map(c)).collect(Collectors.toList());
-
+        if (CollectionUtils.isNotEmpty(curves)) {
+            List<CurveDTO> result = new ArrayList<>();
+            curves.stream().forEach(curve -> {
+                List<CurveProperty> curveProperties = curvePropertyRepository.findCurvePropertyByCurveId(curve.getId());
+                CurveDTO curveDTO = modelMapper.map(curve)
+                        .withCurveProperties(curveProperties.stream()
+                                .map(curveProperty -> modelMapper.map(curveProperty))
+                                .toList());
+                result.add(curveDTO);
+            });
+            return result;
+        }
         return Collections.emptyList();
     }
 
