@@ -37,6 +37,10 @@ public class DoseResponseCurveGraphQLController {
         this.curveService = curveService;
     }
 
+    @QueryMapping
+    public CurveDTO getCurveById(@Argument long curveId) {
+        return curveService.getCurveById(curveId);
+    }
 
     @QueryMapping
     public List<CurveDTO> getCurvesByPlateId(@Argument long plateId) {

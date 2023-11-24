@@ -26,7 +26,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: property_numeric_value
-                  type: float4[]
+                  type: float4
                   constraints:
                     nullable: true
               - column:
@@ -36,7 +36,7 @@ databaseChangeLog:
                     nullable: true
         - addForeignKeyConstraint:
             constraintName: curve_id_fkey
-            baseTableName: curve_properties
+            baseTableName: curve_property
             baseColumnNames: curve_id
             referencedTableName: curve
             referencedColumnNames: id
@@ -44,7 +44,7 @@ databaseChangeLog:
             validate: true
         # TODO: enable this when the refactoring is finished
         #  - changeSet:
-        #      id: 2
+        #      id: 3
         #      author: sberberovic
         #      changes:
         #        - sql:
