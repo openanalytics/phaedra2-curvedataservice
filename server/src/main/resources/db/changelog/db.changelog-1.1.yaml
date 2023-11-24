@@ -1,0 +1,51 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: sberberovic
+      changes:
+        - createTable:
+            tableName: curve_property
+            schemaName: curvedata
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: curve_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: property_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: property_numeric_value
+                  type: float4
+                  constraints:
+                    nullable: true
+              - column:
+                  name: property_string_value
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+        - addForeignKeyConstraint:
+            constraintName: curve_id_fkey
+            baseTableName: curve_property
+            baseColumnNames: curve_id
+            referencedTableName: curve
+            referencedColumnNames: id
+            onDelete: CASCADE
+            validate: true
+        # TODO: enable this when the refactoring is finished
+        #  - changeSet:
+        #      id: 3
+        #      author: sberberovic
+        #      changes:
+        #        - sql:
+        #            sql: alter table curve drop column p_ic50, drop column e_max, drop column e_min, drop column e_max_conc, drop column e_min_conc, drop column p_ic20, drop column p_ic80, drop column slope, drop column bottom, drop column top, drop column slope_lower_ci, drop column slope_upper_ci, drop column residual_variance;
