@@ -1,7 +1,7 @@
 /**
  * Phaedra II
  *
- * Copyright (C) 2016-2023 Open Analytics
+ * Copyright (C) 2016-2024 Open Analytics
  *
  * ===========================================================================
  *
@@ -26,11 +26,11 @@ import org.springframework.kafka.annotation.EnableKafka;
 @Configuration
 @EnableKafka
 public class KafkaConfig {
-	
+
 	public static final String GROUP_ID = "curvedata-service";
-	
+
     public static final String TOPIC_CURVEDATA = "curvedata";
-    
+
     public static final String EVENT_SAVE_CURVE = "saveCurve";
 
 }
