@@ -1,7 +1,7 @@
 /**
  * Phaedra II
  *
- * Copyright (C) 2016-2023 Open Analytics
+ * Copyright (C) 2016-2024 Open Analytics
  *
  * ===========================================================================
  *
@@ -20,28 +20,27 @@
  */
 package eu.openanalytics.phaedra.curvedataservice;
 
-import eu.openanalytics.phaedra.util.auth.AuthenticationConfigHelper;
-import eu.openanalytics.phaedra.util.auth.AuthorizationServiceFactory;
-import eu.openanalytics.phaedra.util.auth.IAuthorizationService;
-import eu.openanalytics.phaedra.util.jdbc.JDBCUtils;
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.servers.Server;
-import org.apache.commons.lang3.StringUtils;
+import java.time.Clock;
+
+import javax.sql.DataSource;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
-import javax.servlet.ServletContext;
-import javax.sql.DataSource;
-import java.time.Clock;
+import eu.openanalytics.phaedra.util.auth.AuthenticationConfigHelper;
+import eu.openanalytics.phaedra.util.auth.AuthorizationServiceFactory;
+import eu.openanalytics.phaedra.util.auth.IAuthorizationService;
+import eu.openanalytics.phaedra.util.jdbc.JDBCUtils;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.servers.Server;
 
 @EnableWebSecurity
 @SpringBootApplication
@@ -51,11 +50,9 @@ import java.time.Clock;
 public class CurveDataServiceApplication {
 
     private final Environment environment;
-    private final ServletContext servletContext;
 
-    public CurveDataServiceApplication(Environment environment, ServletContext servletContext) {
+    public CurveDataServiceApplication(Environment environment) {
         this.environment = environment;
-        this.servletContext = servletContext;
     }
 
     public static void main(String[] args) {
@@ -64,24 +61,7 @@ public class CurveDataServiceApplication {
 
     @Bean
     public DataSource dataSource() {
-        String url = environment.getProperty("DB_URL");
-        String username = environment.getProperty("DB_USER");
-        String password = environment.getProperty("DB_PASSWORD");
-
-        if (StringUtils.isEmpty(url)) {
-            throw new RuntimeException("No database URL configured: " + url);
-        }
-        String driverClassName = JDBCUtils.getDriverClassName(url);
-        if (driverClassName == null) {
-            throw new RuntimeException("Unsupported database type: " + url);
-        }
-
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(driverClassName);
-        dataSource.setUrl(url);
-        dataSource.setUsername(username);
-        dataSource.setPassword(password);
-        return dataSource;
+    	return JDBCUtils.createDataSource(environment);
     }
 
     @Bean

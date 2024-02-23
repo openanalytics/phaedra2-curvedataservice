@@ -1,7 +1,7 @@
 /**
  * Phaedra II
  *
- * Copyright (C) 2016-2023 Open Analytics
+ * Copyright (C) 2016-2024 Open Analytics
  *
  * ===========================================================================
  *
@@ -49,36 +49,38 @@ public class CurveService {
 
     public CurveDTO createCurve(CurveDTO curveDTO) {
         // workaround for https://github.com/spring-projects/spring-data-jdbc/issues/1033
-        var simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("curve").usingGeneratedKeyColumns("id");
-        var curve = modelMapper.map(curveDTO);
-        Number curveId = simpleJdbcInsert.executeAndReturnKey(new HashMap<>() {{
-            put("substance_name", curve.getSubstanceName());
-            put("plate_id", curve.getPlateId());
-            put("feature_id", curve.getFeatureId());
-            put("protocol_id", curve.getProtocolId());
-            put("result_set_id", curve.getResultSetId());
-            put("fit_date", curve.getFitDate());
-            put("version", curve.getVersion());
-            put("wells", curve.getWells());
-            put("well_concentrations", curve.getWellConcentrations());
-            put("feature_values", curve.getFeatureValues());
-            put("x_axis_labels", curve.getXAxisLabels());
-            put("plot_dose_data", curve.getPlotDoseData());
-            put("plot_prediction_data", curve.getPlotPredictionData());
-            put("weights", curve.getWeights());
-        }});
+//        var simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("curve").usingGeneratedKeyColumns("id");
+//        Number curveId = simpleJdbcInsert.executeAndReturnKey(new HashMap<>() {{
+//            put("substance_name", curve.getSubstanceName());
+//            put("plate_id", curve.getPlateId());
+//            put("feature_id", curve.getFeatureId());
+//            put("protocol_id", curve.getProtocolId());
+//            put("result_set_id", curve.getResultSetId());
+//            put("fit_date", curve.getFitDate());
+//            put("version", curve.getVersion());
+//            put("wells", curve.getWells());
+//            put("well_concentrations", curve.getWellConcentrations());
+//            put("feature_values", curve.getFeatureValues());
+//            put("x_axis_labels", curve.getXAxisLabels());
+//            put("plot_dose_data", curve.getPlotDoseData());
+//            put("plot_prediction_data", curve.getPlotPredictionData());
+//            put("weights", curve.getWeights());
+//        }});
+
+        Curve curve = modelMapper.map(curveDTO);
+        Curve created = curveRepository.save(curve);
 
         if (CollectionUtils.isNotEmpty(curveDTO.getCurveProperties())) {
             curveDTO.getCurveProperties().forEach(curvePropertyDTO -> {
-                CurveProperty curveProperty = modelMapper.map(curvePropertyDTO.withCurveId(curveId.longValue()));
+                CurveProperty curveProperty = modelMapper.map(curvePropertyDTO.withCurveId(created.getId()));
                 curvePropertyRepository.save(curveProperty);
             });
         }
 
-        List<CurvePropertyDTO> curveProperties = curvePropertyRepository.findCurvePropertyByCurveId(curveId.longValue())
+        List<CurvePropertyDTO> curveProperties = curvePropertyRepository.findCurvePropertyByCurveId(created.getId())
                 .stream().map(modelMapper::map).toList();
         logger.info(String.format("A new curve for %s and featureId %d has been created!", curveDTO.getSubstanceName(), curveDTO.getFeatureId()));
-        return curveDTO.withId(curveId.longValue()).withCurveProperties(curveProperties);
+        return curveDTO.withId(created.getId()).withCurveProperties(curveProperties);
     }
 
     public CurveDTO getCurveById(Long curveId) {
