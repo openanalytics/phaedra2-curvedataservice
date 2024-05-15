@@ -20,18 +20,20 @@
  */
 package eu.openanalytics.phaedra.curvedataservice.client.config;
 
-import eu.openanalytics.phaedra.curvedataservice.client.CurveDataServiceClient;
-import eu.openanalytics.phaedra.curvedataservice.client.impl.CachingHttpCurveDataServiceClient;
-import eu.openanalytics.phaedra.util.PhaedraRestTemplate;
-import eu.openanalytics.phaedra.util.auth.IAuthorizationService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+
+import eu.openanalytics.phaedra.curvedataservice.client.CurveDataServiceClient;
+import eu.openanalytics.phaedra.curvedataservice.client.impl.HttpCurveDataServiceClient;
+import eu.openanalytics.phaedra.util.PhaedraRestTemplate;
+import eu.openanalytics.phaedra.util.auth.IAuthorizationService;
 
 @Configuration
 public class CurveDataServiceClientAutoConfiguration {
 
     @Bean
-    public CurveDataServiceClient curveDataServiceClient(PhaedraRestTemplate phaedraRestTemplate, IAuthorizationService authService) {
-        return new CachingHttpCurveDataServiceClient(phaedraRestTemplate, authService);
+    public CurveDataServiceClient curveDataServiceClient(PhaedraRestTemplate phaedraRestTemplate, IAuthorizationService authService, Environment environment) {
+        return new HttpCurveDataServiceClient(phaedraRestTemplate, authService, environment);
     }
 }

@@ -22,9 +22,13 @@ package eu.openanalytics.phaedra.curvedataservice.client.impl;
 
 public class UrlFactory {
 
-	private static final String CURVE_DATA_SERVICE = "http://phaedra-curvedata-service:8080/phaedra/curvedata-service";
-
-    public static String curve() {
-        return String.format("%s/curves", CURVE_DATA_SERVICE);
+    private String baseURL;
+    
+    public UrlFactory(String baseURL) {
+    	this.baseURL = baseURL;
+	}
+    
+    public String curve() {
+        return String.format("%s/curves", baseURL);
     }
 }
