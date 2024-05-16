@@ -17,19 +17,19 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @TestPropertySource(locations = "classpath:application-test.properties")
 public class CurvePropertyRepositoryTest {
 
-    @Autowired
-    private CurvePropertyRepository curvePropertyRepository;
+  @Autowired
+  private CurvePropertyRepository curvePropertyRepository;
 
-    @DynamicPropertySource
-    static void registerPgProperties(DynamicPropertyRegistry registry) {
-        registry.add("DB_URL", Containers.postgreSQLContainer::getJdbcUrl);
-        registry.add("DB_USER", Containers.postgreSQLContainer::getUsername);
-        registry.add("DB_PASSWORD", Containers.postgreSQLContainer::getPassword);
-    }
+  @DynamicPropertySource
+  static void registerPgProperties(DynamicPropertyRegistry registry) {
+    registry.add("DB_URL", Containers.postgreSQLContainer::getJdbcUrl);
+    registry.add("DB_USER", Containers.postgreSQLContainer::getUsername);
+    registry.add("DB_PASSWORD", Containers.postgreSQLContainer::getPassword);
+  }
 
-    @Test
-    public void contextLoads() {
-        Assertions.assertThat(curvePropertyRepository).isNotNull();
-    }
+  @Test
+  public void contextLoads() {
+    Assertions.assertThat(curvePropertyRepository).isNotNull();
+  }
 
 }
