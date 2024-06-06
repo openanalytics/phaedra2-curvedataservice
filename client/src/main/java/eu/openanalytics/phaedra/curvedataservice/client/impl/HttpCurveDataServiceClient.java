@@ -20,11 +20,9 @@
  */
 package eu.openanalytics.phaedra.curvedataservice.client.impl;
 
-import eu.openanalytics.curvedataservice.dto.CurveDTO;
-import eu.openanalytics.phaedra.curvedataservice.client.CurveDataServiceClient;
-import eu.openanalytics.phaedra.curvedataservice.client.exception.CurveUnresolvedException;
-import eu.openanalytics.phaedra.util.PhaedraRestTemplate;
-import eu.openanalytics.phaedra.util.auth.IAuthorizationService;
+import java.util.Date;
+
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
@@ -32,7 +30,11 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Date;
+import eu.openanalytics.curvedataservice.dto.CurveDTO;
+import eu.openanalytics.phaedra.curvedataservice.client.CurveDataServiceClient;
+import eu.openanalytics.phaedra.curvedataservice.client.exception.CurveUnresolvedException;
+import eu.openanalytics.phaedra.util.PhaedraRestTemplate;
+import eu.openanalytics.phaedra.util.auth.IAuthorizationService;
 
 @Component
 public class HttpCurveDataServiceClient implements CurveDataServiceClient {
@@ -40,9 +42,15 @@ public class HttpCurveDataServiceClient implements CurveDataServiceClient {
     private final RestTemplate restTemplate;
     private final IAuthorizationService authService;
 
-    public HttpCurveDataServiceClient(PhaedraRestTemplate restTemplate, IAuthorizationService authService) {
+    private final UrlFactory urlFactory;
+    
+    private static final String PROP_BASE_URL = "phaedra.curvedata-service.base-url";
+    private static final String DEFAULT_BASE_URL = "http://phaedra-curvedata-service:8080/phaedra/curvedata-service";
+    
+    public HttpCurveDataServiceClient(PhaedraRestTemplate restTemplate, IAuthorizationService authService, Environment environment) {
         this.restTemplate = restTemplate;
         this.authService = authService;
+        this.urlFactory = new UrlFactory(environment.getProperty(PROP_BASE_URL, DEFAULT_BASE_URL));
     }
 
     @Override
@@ -57,9 +65,9 @@ public class HttpCurveDataServiceClient implements CurveDataServiceClient {
                 .version("0.0.1")
                 .build();
 
-        HttpEntity<?> httpEntity = new HttpEntity(curveDTO, makeHttpHeaders());
+        HttpEntity<?> httpEntity = new HttpEntity<>(curveDTO, makeHttpHeaders());
         try {
-            var response = restTemplate.postForObject(UrlFactory.curve(), httpEntity, CurveDTO.class);
+            var response = restTemplate.postForObject(urlFactory.curve(), httpEntity, CurveDTO.class);
             if (response == null) {
                 throw new CurveUnresolvedException("Curve could not be converted");
             }
@@ -85,9 +93,9 @@ public class HttpCurveDataServiceClient implements CurveDataServiceClient {
                 .plotPredictionData(prediction)
                 .build();
 
-        HttpEntity<?> httpEntity = new HttpEntity(curveDTO, makeHttpHeaders());
+        HttpEntity<?> httpEntity = new HttpEntity<>(curveDTO, makeHttpHeaders());
         try {
-            var response = restTemplate.postForObject(UrlFactory.curve(), httpEntity, CurveDTO.class);
+            var response = restTemplate.postForObject(urlFactory.curve(), httpEntity, CurveDTO.class);
             if (response == null) {
                 throw new CurveUnresolvedException("Curve could not be converted");
             }
