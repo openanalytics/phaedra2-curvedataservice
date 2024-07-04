@@ -19,11 +19,13 @@
 package eu.openanalytics.phaedra.curvedataservice.model;
 
 import java.util.Date;
-import javax.validation.constraints.NotNull;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
+
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data()
 @NoArgsConstructor

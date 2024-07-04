@@ -20,16 +20,22 @@
  */
 package eu.openanalytics.curvedataservice.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import eu.openanalytics.phaedra.util.dto.validation.OnCreate;
-import eu.openanalytics.phaedra.util.dto.validation.OnUpdate;
-import lombok.*;
-import lombok.experimental.NonFinal;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import eu.openanalytics.phaedra.util.dto.validation.OnCreate;
+import eu.openanalytics.phaedra.util.dto.validation.OnUpdate;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.Value;
+import lombok.With;
+import lombok.experimental.NonFinal;
 
 @Value
 @Builder
