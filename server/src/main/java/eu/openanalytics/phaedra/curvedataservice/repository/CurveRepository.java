@@ -20,7 +20,6 @@ package eu.openanalytics.phaedra.curvedataservice.repository;
 
 import eu.openanalytics.phaedra.curvedataservice.model.Curve;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -43,5 +42,5 @@ public interface CurveRepository extends CrudRepository<Curve, Long> {
   List<Curve> findCurvesByFeatureId(long featureId);
 
   @Query("select * from curve where :wellId = ANY (wells)")
-  Optional<Curve> findCurveThatIncludesWellId(long wellId);
+  List<Curve> findCurvesThatIncludesWellId(long wellId);
 }

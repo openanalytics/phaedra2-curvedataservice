@@ -60,7 +60,7 @@ public class DoseResponseCurveGraphQLController {
   }
 
   @QueryMapping
-  public CurveDTO getCurveThatIncludesWellId(@Argument long wellId) {
-    return curveService.getCurveThatIncludesWellId(wellId);
+  public List<CurveDTO> getCurvesThatIncludesWellId(@Argument long wellId) {
+    return curveService.getCurvesThatIncludesWellId(wellId);
   }
 }
