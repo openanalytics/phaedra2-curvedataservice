@@ -207,4 +207,16 @@ public class CurveService {
     }
     return Collections.emptyList();
   }
+
+  public CurveDTO getCurveThatIncludesWellId(long wellId) {
+    Optional<Curve> curve = curveRepository.findCurveThatIncludesWellId(wellId);
+    if (curve.isPresent()) {
+      List<CurveProperty> curveProperties = curvePropertyRepository.findCurvePropertyByCurveId(curve.get().getId());
+      return modelMapper.map(curve.get())
+          .withCurveProperties(curveProperties.stream()
+              .map(modelMapper::map)
+              .toList());
+    }
+    return null;
+  }
 }
