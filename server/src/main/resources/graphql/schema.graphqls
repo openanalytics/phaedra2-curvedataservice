@@ -50,4 +50,5 @@ type Query {
     getCurvesBySubstanceName(substanceName: String): [CurveDTO]
     getCurvesBySubstanceType(substanceType: String): [CurveDTO]
     getCurvesByFeatureId(featureId: ID): [CurveDTO]
+    getCurvesThatIncludesWellId(wellId: ID): [CurveDTO]
 }

@@ -43,30 +43,9 @@ public class CurveService {
   private final CurveRepository curveRepository;
   private final CurvePropertyRepository curvePropertyRepository;
 
-  private final DataSource dataSource;
-
   private final Logger logger = LoggerFactory.getLogger(getClass());
 
   public CurveDTO createCurve(CurveDTO curveDTO) {
-    // workaround for https://github.com/spring-projects/spring-data-jdbc/issues/1033
-//        var simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("curve").usingGeneratedKeyColumns("id");
-//        Number curveId = simpleJdbcInsert.executeAndReturnKey(new HashMap<>() {{
-//            put("substance_name", curve.getSubstanceName());
-//            put("plate_id", curve.getPlateId());
-//            put("feature_id", curve.getFeatureId());
-//            put("protocol_id", curve.getProtocolId());
-//            put("result_set_id", curve.getResultSetId());
-//            put("fit_date", curve.getFitDate());
-//            put("version", curve.getVersion());
-//            put("wells", curve.getWells());
-//            put("well_concentrations", curve.getWellConcentrations());
-//            put("feature_values", curve.getFeatureValues());
-//            put("x_axis_labels", curve.getXAxisLabels());
-//            put("plot_dose_data", curve.getPlotDoseData());
-//            put("plot_prediction_data", curve.getPlotPredictionData());
-//            put("weights", curve.getWeights());
-//        }});
-
     Curve curve = modelMapper.map(curveDTO);
     Curve created = curveRepository.save(curve);
 
@@ -87,124 +66,59 @@ public class CurveService {
   }
 
   public CurveDTO getCurveById(Long curveId) {
-    Optional<Curve> curve = curveRepository.findById(curveId);
-    if (curve.isPresent()) {
-      List<CurveProperty> curveProperties = curvePropertyRepository.findCurvePropertyByCurveId(
-          curveId);
-      return modelMapper.map(curve.get())
-          .withCurveProperties(curveProperties.stream()
-              .map(modelMapper::map)
-              .toList());
-    }
-    return null;
+    return curveRepository.findById(curveId)
+        .map(this::toCurveDTOWithProperties)
+        .orElse(null);
   }
 
   public List<CurveDTO> getCurveByPlateId(Long plateId) {
-    List<Curve> curves = curveRepository.findCurveByPlateId(plateId);
-    if (CollectionUtils.isNotEmpty(curves)) {
-      List<CurveDTO> result = new ArrayList<>();
-      curves.stream().forEach(curve -> {
-        List<CurveProperty> curveProperties = curvePropertyRepository.findCurvePropertyByCurveId(
-            curve.getId());
-        CurveDTO curveDTO = modelMapper.map(curve)
-            .withCurveProperties(curveProperties.stream()
-                .map(modelMapper::map)
-                .toList());
-        result.add(curveDTO);
-      });
-      return result;
-    }
-    return Collections.emptyList();
+    return curveRepository.findCurveByPlateId(plateId).stream()
+        .map(this::toCurveDTOWithProperties)
+        .toList();
   }
 
   public List<CurveDTO> getLatestCurveByPlateId(Long plateId) {
-    List<Curve> curves = curveRepository.findLatestCurvesByPlateId(plateId);
-    if (CollectionUtils.isNotEmpty(curves)) {
-      List<CurveDTO> result = new ArrayList<>();
-      curves.stream().forEach(curve -> {
-        List<CurveProperty> curveProperties = curvePropertyRepository.findCurvePropertyByCurveId(
-            curve.getId());
-        CurveDTO curveDTO = modelMapper.map(curve)
-            .withCurveProperties(curveProperties.stream()
-                .map(modelMapper::map)
-                .toList());
-        result.add(curveDTO);
-      });
-      return result;
-    }
-
-    return Collections.emptyList();
+    return curveRepository.findLatestCurvesByPlateId(plateId).stream()
+        .map(this::toCurveDTOWithProperties)
+        .toList();
   }
 
   public List<CurveDTO> getAllCurves() {
-    List<Curve> curves = (List<Curve>) curveRepository.findAll();
-    if (CollectionUtils.isNotEmpty(curves)) {
-      List<CurveDTO> result = new ArrayList<>();
-      curves.stream().forEach(curve -> {
-        List<CurveProperty> curveProperties = curvePropertyRepository.findCurvePropertyByCurveId(
-            curve.getId());
-        CurveDTO curveDTO = modelMapper.map(curve)
-            .withCurveProperties(curveProperties.stream()
-                .map(modelMapper::map)
-                .toList());
-        result.add(curveDTO);
-      });
-      return result;
-    }
-    return Collections.emptyList();
+    return ((List<Curve>) curveRepository.findAll()).stream()
+        .map(this::toCurveDTOWithProperties)
+        .toList();
   }
 
   public List<CurveDTO> getCurvesBySubstanceName(String substanceName) {
-    List<Curve> curves = curveRepository.findCurvesBySubstanceName(substanceName);
-    if (CollectionUtils.isNotEmpty(curves)) {
-      List<CurveDTO> result = new ArrayList<>();
-      curves.stream().forEach(curve -> {
-        List<CurveProperty> curveProperties = curvePropertyRepository.findCurvePropertyByCurveId(
-            curve.getId());
-        CurveDTO curveDTO = modelMapper.map(curve)
-            .withCurveProperties(curveProperties.stream()
-                .map(modelMapper::map)
-                .toList());
-        result.add(curveDTO);
-      });
-      return result;
-    }
-    return Collections.emptyList();
+    return curveRepository.findCurvesBySubstanceName(substanceName).stream()
+        .map(this::toCurveDTOWithProperties).
+        toList();
   }
 
   public List<CurveDTO> getCurvesBySubstanceType(String substanceType) {
-    List<Curve> curves = curveRepository.findCurvesBySubstanceType(substanceType);
-    if (CollectionUtils.isNotEmpty(curves)) {
-      List<CurveDTO> result = new ArrayList<>();
-      curves.stream().forEach(curve -> {
-        List<CurveProperty> curveProperties = curvePropertyRepository.findCurvePropertyByCurveId(
-            curve.getId());
-        CurveDTO curveDTO = modelMapper.map(curve)
-            .withCurveProperties(curveProperties.stream()
-                .map(modelMapper::map)
-                .toList());
-        result.add(curveDTO);
-      });
-      return result;
-    }
-    return Collections.emptyList();
+    return curveRepository.findCurvesBySubstanceType(substanceType).stream()
+        .map(this::toCurveDTOWithProperties)
+        .toList();
   }
 
   public List<CurveDTO> getCurvesByFeatureId(long featureId) {
-    List<Curve> curves = curveRepository.findCurvesByFeatureId(featureId);
-    if (CollectionUtils.isNotEmpty(curves)) {
-      List<CurveDTO> result = new ArrayList<>();
-      curves.stream().forEach(curve -> {
-        List<CurveProperty> curveProperties = curvePropertyRepository.findCurvePropertyByCurveId(
-            curve.getId());
-        CurveDTO curveDTO = modelMapper.map(curve)
-            .withCurveProperties(curveProperties.stream()
-                .map(modelMapper::map)
-                .toList());
-        result.add(curveDTO);
-      });
-      return result;
-    }
-    return Collections.emptyList();
+    return curveRepository.findCurvesByFeatureId(featureId).stream()
+        .map(this::toCurveDTOWithProperties)
+        .toList();
+  }
+
+  public List<CurveDTO> getCurvesThatIncludesWellId(long wellId) {
+    return curveRepository.findCurvesThatIncludesWellId(wellId).stream()
+        .map(this::toCurveDTOWithProperties)
+        .toList();
+  }
+
+  private CurveDTO toCurveDTOWithProperties(Curve curve) {
+    List<CurveProperty> curveProperties = curvePropertyRepository
+        .findCurvePropertyByCurveId(curve.getId());
+    return modelMapper.map(curve)
+        .withCurveProperties(curveProperties.stream()
+            .map(modelMapper::map)
+            .toList());
   }
 }
