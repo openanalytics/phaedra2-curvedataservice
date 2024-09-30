@@ -40,4 +40,7 @@ public interface CurveRepository extends CrudRepository<Curve, Long> {
 
   @Query("select * from curve where feature_id = :featureId order by fit_date desc")
   List<Curve> findCurvesByFeatureId(long featureId);
+
+  @Query("select * from curve where :wellId = ANY (wells)")
+  List<Curve> findCurvesThatIncludesWellId(long wellId);
 }
