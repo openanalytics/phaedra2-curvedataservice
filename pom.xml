@@ -11,7 +11,7 @@
     <packaging>pom</packaging>
 
     <artifactId>phaedra2-curvedataservice</artifactId>
-    <name>phaedra2-curvedataservice</name>
+    <name>Phaedra2 Curve-Data Service</name>
     <version>2.4.0-SNAPSHOT</version>
 
     <modules>
