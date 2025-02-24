@@ -29,8 +29,11 @@ public interface CurveRepository extends CrudRepository<Curve, Long> {
 
   List<Curve> findCurveByPlateId(Long plateId);
 
-  @Query("select * from curve where plate_id = :plateId order by fit_date desc limit (select count(distinct substance_name) from curve where plate_id = :plateId)")
+  @Query("select * from curve where plate_id = :plateId AND result_set_id = (select max(result_set_id) from curve where plate_id = :plateId) order by fit_date desc")
   List<Curve> findLatestCurvesByPlateId(Long plateId);
+
+  @Query("select * from curve where plate_id = :plateId AND result_set_id = :resultSetId order by fit_date desc")
+  List<Curve> findCurvesByPlateIdAndResultSetId(Long plateId, Long resultSetId);
 
   @Query("select * from curve where substance_name = :substanceName order by  fit_date desc")
   List<Curve> findCurvesBySubstanceName(String substanceName);
