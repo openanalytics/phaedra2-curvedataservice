@@ -19,7 +19,9 @@
 package eu.openanalytics.phaedra.curvedataservice.repository;
 
 import eu.openanalytics.phaedra.curvedataservice.model.Curve;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -46,4 +48,10 @@ public interface CurveRepository extends CrudRepository<Curve, Long> {
 
   @Query("select * from curve where :wellId = ANY (wells)")
   List<Curve> findCurvesThatIncludesWellId(long wellId);
+
+  @Query("select * from curve where wells && array[:wellIds]::bigint[] and result_set_id = (select max(result_set_id) from curve where wells && array[:wellIds]::bigint[]) order by fit_date desc")
+  List<Curve> findLatestCurvesByWellIds(List<Long> wellIds);
+
+  @Query("select * from curve where wells && array[:wellIds]::bigint[] and result_set_id = :resultSetId order by fit_date desc")
+  List<Curve> findCurvesByWellIdsAndResultSetId(List<Long> wellIds, Long resultSetId);
 }
