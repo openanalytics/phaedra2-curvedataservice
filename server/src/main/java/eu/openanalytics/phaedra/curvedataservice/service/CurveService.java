@@ -113,6 +113,17 @@ public class CurveService {
         .toList();
   }
 
+  public List<CurveDTO> getCurvesByWellIds(List<Long> wellIds, Optional<Long> resultSetId) {
+    if (resultSetId.isPresent()) {
+      return curveRepository.findCurvesByWellIdsAndResultSetId(wellIds, resultSetId.get()).stream()
+          .map(this::toCurveDTOWithProperties)
+          .toList();
+    }
+    return curveRepository.findLatestCurvesByWellIds(wellIds).stream()
+        .map(this::toCurveDTOWithProperties)
+        .toList();
+  }
+
   private CurveDTO toCurveDTOWithProperties(Curve curve) {
     List<CurveProperty> curveProperties = curvePropertyRepository
         .findCurvePropertyByCurveId(curve.getId());
