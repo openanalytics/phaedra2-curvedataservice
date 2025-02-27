@@ -49,7 +49,7 @@ public interface CurveRepository extends CrudRepository<Curve, Long> {
   @Query("select * from curve where :wellId = ANY (wells)")
   List<Curve> findCurvesThatIncludesWellId(long wellId);
 
-  @Query("select * from curve where wells && :wellIds and result_set_id = (select max(result_set_id) from curve where plate_id = :plateId) order by fit_date desc")
+  @Query("select * from curve where wells && :wellIds and result_set_id = (select max(result_set_id) from curve where wells && :wellIds) order by fit_date desc")
   List<Curve> findLatestCurvesByWellIds(List<Long> wellIds);
 
   @Query("select * from curve where wells && :wellIds and result_set_id = :resultSetId order by fit_date desc")
