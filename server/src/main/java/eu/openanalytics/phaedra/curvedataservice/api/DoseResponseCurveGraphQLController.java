@@ -46,6 +46,11 @@ public class DoseResponseCurveGraphQLController {
   }
 
   @QueryMapping
+  public List<CurveDTO> getCurvesByPlateIds(@Argument List<Long> plateIds) {
+    return curveService.getLatestCurveByPlateIds(plateIds);
+  }
+
+  @QueryMapping
   public List<CurveDTO> getCurvesBySubstanceName(@Argument String substanceName) {
     return curveService.getCurvesBySubstanceName(substanceName);
   }

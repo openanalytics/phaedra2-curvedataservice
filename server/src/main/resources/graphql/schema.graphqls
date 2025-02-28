@@ -47,6 +47,7 @@ type CurveDTO {
 type Query {
     getCurveById(curveId: ID): CurveDTO
     getCurvesByPlateId(plateId: ID): [CurveDTO]
+    getCurvesByPlateIds(plateIds: [ID]): [CurveDTO]
     getCurvesBySubstanceName(substanceName: String): [CurveDTO]
     getCurvesBySubstanceType(substanceType: String): [CurveDTO]
     getCurvesByFeatureId(featureId: ID): [CurveDTO]
