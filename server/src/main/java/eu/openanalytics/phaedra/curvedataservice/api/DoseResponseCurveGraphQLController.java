@@ -21,6 +21,7 @@ package eu.openanalytics.phaedra.curvedataservice.api;
 import eu.openanalytics.curvedataservice.dto.CurveDTO;
 import eu.openanalytics.phaedra.curvedataservice.service.CurveService;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
@@ -45,6 +46,11 @@ public class DoseResponseCurveGraphQLController {
   }
 
   @QueryMapping
+  public List<CurveDTO> getCurvesByPlateIds(@Argument List<Long> plateIds) {
+    return curveService.getLatestCurveByPlateIds(plateIds);
+  }
+
+  @QueryMapping
   public List<CurveDTO> getCurvesBySubstanceName(@Argument String substanceName) {
     return curveService.getCurvesBySubstanceName(substanceName);
   }
@@ -62,5 +68,10 @@ public class DoseResponseCurveGraphQLController {
   @QueryMapping
   public List<CurveDTO> getCurvesThatIncludesWellId(@Argument long wellId) {
     return curveService.getCurvesThatIncludesWellId(wellId);
+  }
+
+  @QueryMapping
+  public List<CurveDTO> getCurvesByWellIds(@Argument List<Long> wellIds, @Argument Optional<Long> resultSetId) {
+    return curveService.getCurvesByWellIds(wellIds, resultSetId);
   }
 }

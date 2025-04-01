@@ -83,6 +83,12 @@ public class CurveService {
         .toList();
   }
 
+  public List<CurveDTO> getLatestCurveByPlateIds(List<Long> plateIds) {
+    return curveRepository.findLatestCurvesByPlateIdIn(plateIds).stream()
+        .map(this::toCurveDTOWithProperties)
+        .toList();
+  }
+
   public List<CurveDTO> getAllCurves() {
     return ((List<Curve>) curveRepository.findAll()).stream()
         .map(this::toCurveDTOWithProperties)
@@ -113,9 +119,19 @@ public class CurveService {
         .toList();
   }
 
+  public List<CurveDTO> getCurvesByWellIds(List<Long> wellIds, Optional<Long> resultSetId) {
+    if (resultSetId.isPresent()) {
+      return curveRepository.findCurvesByWellIdsAndResultSetId(wellIds, resultSetId.get()).stream()
+          .map(this::toCurveDTOWithProperties)
+          .toList();
+    }
+    return curveRepository.findLatestCurvesByWellIds(wellIds).stream()
+        .map(this::toCurveDTOWithProperties)
+        .toList();
+  }
+
   private CurveDTO toCurveDTOWithProperties(Curve curve) {
-    List<CurveProperty> curveProperties = curvePropertyRepository
-        .findCurvePropertyByCurveId(curve.getId());
+    List<CurveProperty> curveProperties = curvePropertyRepository.findCurvePropertyByCurveId(curve.getId());
     return modelMapper.map(curve)
         .withCurveProperties(curveProperties.stream()
             .map(modelMapper::map)
